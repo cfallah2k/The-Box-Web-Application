@@ -1,0 +1,2090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | The Box - World-Class AI-Powered Education</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/images/BOX-LOGO-1.jpg" sizes="32x32">
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/images/BOX-LOGO-1.jpg" sizes="32x32">
+    <style>
+        /* Global Variables */
+        :root {
+            /* Light Theme */
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #93c5fd;
+            --accent-color: #f59e0b;
+            --accent-dark: #e67e22;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f9fafb;
+            --bg-tertiary: #f3f4f6;
+            --border-color: #e5e7eb;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --radius-sm: 4px;
+            --radius: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --radius-full: 9999px;
+            --gradient-primary: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            --gradient-accent: linear-gradient(135deg, var(--accent-color), var(--accent-dark));
+        }
+
+        .dark-mode {
+            /* Dark Theme */
+            --primary-color: #3b82f6;
+            --primary-dark: #2563eb;
+            --primary-light: #1e40af;
+            --accent-color: #f59e0b;
+            --accent-dark: #e67e22;
+            --text-primary: #f9fafb;
+            --text-secondary: #d1d5db;
+            --bg-primary: #111827;
+            --bg-secondary: #1f2937;
+            --bg-tertiary: #374151;
+            --border-color: #4b5563;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            transition: var(--transition);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--primary-dark);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        button {
+            cursor: pointer;
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary-color);
+            border-radius: var(--radius-full);
+        }
+
+        .section-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            text-align: center;
+            white-space: nowrap;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            border-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-accent {
+            background-color: var(--accent-color);
+            color: white;
+            border: 2px solid var(--accent-color);
+        }
+
+        .btn-accent:hover {
+            background-color: var(--accent-dark);
+            border-color: var(--accent-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-lg {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+        }
+
+        .text-primary {
+            color: var(--primary-color);
+        }
+
+        .text-accent {
+            color: var(--accent-color);
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--bg-primary);
+            box-shadow: var(--shadow-sm);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            height: 80px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            color: var(--text-secondary);
+            position: relative;
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: var(--bg-primary);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            padding: 0.5rem 0;
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: var(--transition);
+            z-index: 100;
+            border: 1px solid var(--border-color);
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: var(--text-secondary);
+            transition: var(--transition);
+        }
+
+        .dropdown-menu a:hover {
+            background-color: var(--bg-tertiary);
+            color: var(--primary-color);
+            padding-left: 1.75rem;
+        }
+
+        .nav-item:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .theme-toggle {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .hamburger {
+            display: none;
+            width: 30px;
+            height: 20px;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background-color: var(--text-primary);
+            transition: var(--transition);
+            border-radius: var(--radius-full);
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 320px;
+            height: 100vh;
+            background-color: var(--bg-primary);
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            z-index: 1000;
+            padding: 6rem 2rem 2rem;
+            overflow-y: auto;
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .mobile-nav-item {
+            position: relative;
+        }
+
+        .mobile-nav-link {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .mobile-nav-link:hover {
+            background-color: var(--bg-tertiary);
+            color: var(--primary-color);
+        }
+
+        .mobile-dropdown-btn {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: none;
+            border: none;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        .mobile-dropdown-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            padding-left: 1rem;
+        }
+
+        .mobile-dropdown-menu.active {
+            max-height: 500px;
+        }
+
+        .mobile-dropdown-menu a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--text-secondary);
+            transition: var(--transition);
+            border-radius: var(--radius);
+        }
+
+        .mobile-dropdown-menu a:hover {
+            background-color: var(--bg-tertiary);
+            color: var(--primary-color);
+        }
+
+        .mobile-nav-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .mobile-theme-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background-color: var(--bg-tertiary);
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+        }
+
+        .theme-toggle-text {
+            font-weight: 600;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Login Section */
+        .login-section {
+            padding: 180px 0 100px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background-color: var(--bg-secondary);
+        }
+
+        .login-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .login-content {
+            flex: 1;
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: var(--bg-primary);
+            padding: 3rem;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .login-header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .login-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .login-subtitle {
+            color: var(--text-secondary);
+        }
+
+        /* Login Form */
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+
+        .form-footer {
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+        }
+
+        /* Premium Account Dropdown */
+        .premium-dropdown {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .premium-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .premium-toggle:hover {
+            border-color: var(--primary-color);
+        }
+
+        .premium-toggle i {
+            transition: var(--transition);
+        }
+
+        .premium-toggle.active i {
+            transform: rotate(180deg);
+        }
+
+        .premium-options {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            margin-top: 0.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            z-index: 10;
+        }
+
+        .premium-options.active {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .premium-option {
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .premium-option:hover {
+            background-color: var(--bg-tertiary);
+        }
+
+        .premium-option.selected {
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+        }
+
+        .premium-option i {
+            margin-right: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        /* Remember Me & Forgot Password */
+        .login-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .remember-me input {
+            width: 16px;
+            height: 16px;
+        }
+
+        .forgot-password {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .forgot-password:hover {
+            color: var(--primary-color);
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: var(--text-secondary);
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background-color: var(--border-color);
+        }
+
+        .divider::before {
+            margin-right: 1rem;
+        }
+
+        .divider::after {
+            margin-left: 1rem;
+        }
+
+        /* Social Login */
+        .social-login {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .social-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .social-btn.google {
+            color: #DB4437;
+        }
+
+        .social-btn.facebook {
+            color: #4267B2;
+        }
+
+        .social-btn.apple {
+            color: var(--text-primary);
+        }
+
+        .signup-link {
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .signup-link a {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* Form Validation */
+        .form-control.error {
+            border-color: var(--error-color);
+        }
+
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .form-control.error + .error-message {
+            display: block;
+        }
+
+        /* Toast Notification */
+        .toast-container {
+            position: fixed;
+            top: 100px;
+            right: 2rem;
+            z-index: 1100;
+        }
+
+        .toast {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            box-shadow: var(--shadow-lg);
+            animation: slideIn 0.3s ease, fadeOut 0.5s ease 3s forwards;
+        }
+
+        .toast.success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .toast.error {
+            background-color: var(--error-color);
+            color: white;
+        }
+
+        .toast i {
+            margin-right: 0.75rem;
+            font-size: 1.25rem;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--bg-secondary);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col:first-child {
+            grid-column: 1 / -1;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-logo-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .footer-logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .footer-about {
+            max-width: 400px;
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background-color: var(--bg-tertiary);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .footer-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            transition: var(--transition);
+        }
+
+        .footer-link:hover {
+            color: var(--primary-color);
+            padding-left: 5px;
+        }
+
+        .footer-newsletter p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius) 0 0 var(--radius);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .newsletter-btn {
+            padding: 0 1.25rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .newsletter-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .login-section {
+                padding: 140px 0 80px;
+            }
+            
+            .login-content {
+                padding: 2rem;
+            }
+            
+            .nav-links, .nav-actions .btn {
+                display: none;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-title {
+                font-size: 1.75rem;
+            }
+            
+            .login-subtitle {
+                font-size: 1rem;
+            }
+            
+            .login-content {
+                padding: 1.5rem;
+            }
+            
+            .login-options {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .forgot-password {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container container">
+            <a href="#" class="logo">
+                <img src="images/BOX-LOGO-1.jpg" alt="The Box Logo" class="logo-img">
+                <span class="logo-text">The Box</span>
+            </a>
+
+            <nav class="nav-links">
+                <div class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </div>
+                <div class="nav-item">
+                    <a href="comingsoonpage.html" class="nav-link">Features <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="comingsoonpage.html">All Features</a>
+                        <a href="comingsoonpage.html">AI Learning</a>
+                        <a href="comingsoonpage.html">Course Catalog</a>
+                        <a href="comingsoonpage.html">Subscription Plans</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="#courses" class="nav-link">Courses <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="comingsoonpage.html">Course Home</a>
+                        <a href="comingsoonpage.html">Short Courses</a>
+                        <a href="comingsoonpage.html">Webinars</a>
+                        <a href="comingsoonpage.html">Credit Transfer</a>
+                        <a href="comingsoonpage.html">Apply Now</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="#resources" class="nav-link">Resources <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="comingsoonpage.html">Resource Hub</a>
+                        <a href="comingsoonpage.html">Blogs</a>
+                        <a href="comingsoonpage.html">Research Journal</a>
+                        <a href="comingsoonpage.html">Video Gallery</a>
+                        <a href="comingsoonpage.html">Refer and Earn</a>
+                        <a href="comingsoonpage.html">Partner With Us</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="#students" class="nav-link">Students <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="#students">Our Students</a>
+                        <a href="comingsoonpage.html">Alumni</a>
+                        <a href="comingsoonpage.html">Student Reviews</a>
+                        <a href="comingsoonpage.html">Photo Gallery</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="comingsoonpage.html" class="nav-link">FAQ</a>
+                </div>
+            </nav>
+
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <a href="Loginpage" class="btn btn-outline">Login</a>
+                <a href="Signuppage.html" class="btn btn-primary">Sign Up</a>
+            </div>
+
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-links">
+            <a href="#home" class="mobile-nav-link">Home</a>
+            
+            <div class="mobile-nav-item">
+                <div class="mobile-nav-link">
+                    <span>Features</span>
+                    <button class="mobile-dropdown-btn">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                <div class="mobile-dropdown-menu">
+                    <a href="comingsoonpage.html">All Features</a>
+                    <a href="comingsoonpage.html">AI Learning</a>
+                    <a href="comingsoonpage.html">Course Catalog</a>
+                    <a href="comingsoonpage.html">Subscription Plans</a>
+                </div>
+            </div>
+            
+            <div class="mobile-nav-item">
+                <div class="mobile-nav-link">
+                    <span>Courses</span>
+                    <button class="mobile-dropdown-btn">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                <div class="mobile-dropdown-menu">
+                    <a href="comingsoonpage.html">Course Home</a>
+                    <a href="comingsoonpage.html">Short Courses</a>
+                    <a href="comingsoonpage.html">Webinars</a>
+                    <a href="comingsoonpage.html">Credit Transfer</a>
+                    <a href="comingsoonpage.html">Apply Now</a>
+                </div>
+            </div>
+            
+            <div class="mobile-nav-item">
+                <div class="mobile-nav-link">
+                    <span>Resources</span>
+                    <button class="mobile-dropdown-btn">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                <div class="mobile-dropdown-menu">
+                    <a href="comingsoonpage.html">Resource Hub</a>
+                    <a href="comingsoonpage.html">Blogs</a>
+                    <a href="comingsoonpage.html">Research Journal</a>
+                    <a href="comingsoonpage.html">Video Gallery</a>
+                    <a href="comingsoonpage.html">Refer and Earn</a>
+                    <a href="comingsoonpage.html">Partner With Us</a>
+                </div>
+            </div>
+            
+            <div class="mobile-nav-item">
+                <div class="mobile-nav-link">
+                    <span>Students</span>
+                    <button class="mobile-dropdown-btn">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                <div class="mobile-dropdown-menu">
+                    <a href="comingsoonpage.html">Our Students</a>
+                    <a href="comingsoonpage.html">Alumni</a>
+                    <a href="comingsoonpage.html">Student Reviews</a>
+                    <a href="comingsoonpage.html">Photo Gallery</a>
+                </div>
+            </div>
+            
+            <a href="comingsoonpage.html" class="mobile-nav-link">FAQ</a>
+        </div>
+        
+        <div class="mobile-theme-toggle">
+            <span class="theme-toggle-text">Dark/Light Mode</span>
+            <button class="theme-toggle" id="mobileThemeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+        
+        <div class="mobile-nav-actions">
+            <a href="Loginpage.html" class="btn btn-outline">Login</a>
+            <a href="Signuppage.html" class="btn btn-primary">Sign Up</a>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+<!-- Premium Hero Section -->
+<section class="hero" id="home">
+    <div class="hero-pattern"></div>
+    <div class="particles" id="particles"></div>
+    
+    <!-- Floating Cards -->
+    <div class="floating-card">
+        <strong>🚀 AI-Powered</strong><br>
+        Smart Learning
+    </div>
+    <div class="floating-card">
+        <strong>🌍 Global Community</strong><br>
+        1M+ Students
+    </div>
+    <div class="floating-card">
+        <strong>⚡ Adaptive Courses</strong><br>
+        Personalized Path
+    </div>
+    
+    <div class="container hero-container">
+        <div class="hero-content">
+            <h1 class="hero-title">World-Class <span>AI-Powered Education</span> for Everyone</h1>
+            <p class="hero-subtitle">Experience a smarter way to learn with adaptive courses, expert instructors, and a global community. Unlock your potential with The Box—where technology meets opportunity.</p>
+            <div class="hero-btns">
+                <a href="Signuppage.html" class="btn btn-primary btn-lg">Get Started</a>
+                <a href="comingsoonpage.html" class="btn btn-outline btn-lg">Explore Features</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="hero-image-container">
+                <img src="images/shutterstock_1076319872-scaled-1200x675.jpg" alt="Students learning with The Box">
+                
+                <!-- AI Tech Overlays -->
+                <div class="ai-overlay ai-overlay-1">
+                    🤖 AI Tutor<br>
+                    <small>Always Available</small>
+                </div>
+                <div class="ai-overlay ai-overlay-2">
+                    📊 Smart Analytics<br>
+                    <small>Track Progress</small>
+                </div>
+                <div class="ai-overlay ai-overlay-3">
+                    🎯 Adaptive Learning<br>
+                    <small>Personalized Path</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+/* Premium Hero Section Styles */
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    overflow: hidden;
+}
+
+/* Animated Background Pattern */
+.hero-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.1;
+    background-image: 
+        radial-gradient(circle at 25% 25%, #ffffff 2px, transparent 2px),
+        radial-gradient(circle at 75% 75%, #ffffff 1px, transparent 1px);
+    background-size: 60px 60px, 40px 40px;
+    animation: patternFloat 20s ease-in-out infinite;
+}
+
+@keyframes patternFloat {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(30px, -30px) rotate(120deg); }
+    66% { transform: translate(-20px, 20px) rotate(240deg); }
+}
+
+/* Floating Elements */
+.hero::before {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+    border-radius: 50%;
+    top: 10%;
+    right: 10%;
+    animation: float 6s ease-in-out infinite;
+    backdrop-filter: blur(10px);
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+    border-radius: 50%;
+    bottom: 20%;
+    left: 15%;
+    animation: float 8s ease-in-out infinite reverse;
+    backdrop-filter: blur(5px);
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-30px) rotate(180deg); }
+}
+
+.hero .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem 0;
+}
+
+.hero-content {
+    animation: slideInLeft 1s ease-out;
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.hero-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.hero-title span {
+    background: linear-gradient(135deg, #ffeaa7, #fab1a0, #fd79a8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 20px rgba(255,234,167,0.5); }
+    to { text-shadow: 0 0 30px rgba(255,234,167,0.8), 0 0 40px rgba(253,121,168,0.3); }
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 2.5rem;
+    max-width: 500px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+.hero-btns {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.hero .btn {
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 2px solid transparent;
+}
+
+.hero .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.hero .btn:hover::before {
+    left: 100%;
+}
+
+.hero .btn-primary {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24, #fd79a8);
+    color: #ffffff;
+    box-shadow: 0 10px 30px rgba(255,107,107,0.4);
+}
+
+.hero .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(255,107,107,0.6);
+    background: linear-gradient(135deg, #ff5252, #d63031, #e84393);
+}
+
+.hero .btn-outline {
+    background: rgba(255,255,255,0.1);
+    color: #ffffff;
+    border: 2px solid rgba(255,255,255,0.3);
+    backdrop-filter: blur(10px);
+}
+
+.hero .btn-outline:hover {
+    background: rgba(255,255,255,0.2);
+    border-color: rgba(255,255,255,0.6);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(255,255,255,0.2);
+}
+
+.hero-image {
+    position: relative;
+    animation: slideInRight 1s ease-out;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.hero-image::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: linear-gradient(135deg, rgba(102,126,234,0.3), rgba(118,75,162,0.3));
+    border-radius: 25px;
+    z-index: -1;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.hero-image-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.hero-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+    display: block;
+}
+
+.hero-image:hover img {
+    transform: translateY(-5px);
+    box-shadow: 0 35px 70px rgba(0,0,0,0.5);
+}
+
+/* AI Tech Overlay Elements */
+.ai-overlay {
+    position: absolute;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    padding: 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #333;
+    z-index: 2;
+    animation: aiPulsate 2s ease-in-out infinite;
+}
+
+@keyframes aiPulsate {
+    0%, 100% { opacity: 0.8; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+}
+
+.ai-overlay-1 {
+    top: 15%;
+    right: -10%;
+    background: linear-gradient(135deg, rgba(102,126,234,0.9), rgba(118,75,162,0.9));
+    color: white;
+}
+
+.ai-overlay-2 {
+    bottom: 20%;
+    left: -15%;
+    background: linear-gradient(135deg, rgba(255,107,107,0.9), rgba(253,121,168,0.9));
+    color: white;
+}
+
+.ai-overlay-3 {
+    top: 45%;
+    right: -5%;
+    background: linear-gradient(135deg, rgba(78,205,196,0.9), rgba(69,183,209,0.9));
+    color: white;
+}
+
+/* Floating UI Elements */
+.floating-card {
+    position: absolute;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 15px;
+    padding: 1rem;
+    color: white;
+    font-size: 0.9rem;
+    animation: floatCard 3s ease-in-out infinite;
+}
+
+.floating-card:nth-child(1) {
+    top: 20%;
+    right: 20%;
+    animation-delay: 0s;
+}
+
+.floating-card:nth-child(2) {
+    bottom: 30%;
+    left: 10%;
+    animation-delay: 1s;
+}
+
+.floating-card:nth-child(3) {
+    top: 60%;
+    right: 10%;
+    animation-delay: 2s;
+}
+
+@keyframes floatCard {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+        opacity: 0.7;
+    }
+    50% {
+        transform: translateY(-20px) rotate(2deg);
+        opacity: 1;
+    }
+}
+
+/* Particle Effect */
+.particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(255,255,255,0.6);
+    border-radius: 50%;
+    animation: particleFloat 15s linear infinite;
+}
+
+@keyframes particleFloat {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .hero-container {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        text-align: center;
+    }
+
+    .hero-image-container {
+        order: -1;
+        max-width: 500px;
+    }
+
+    .ai-overlay {
+        font-size: 0.7rem;
+        padding: 0.5rem;
+    }
+
+    .ai-overlay-1 { right: -5%; }
+    .ai-overlay-2 { left: -10%; }
+    .ai-overlay-3 { right: 0%; }
+}
+
+@media (max-width: 768px) {
+    .hero-container {
+        gap: 2rem;
+        padding: 1rem 0;
+    }
+
+    .hero-title {
+        font-size: 2.2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+        max-width: none;
+        margin-bottom: 2rem;
+    }
+
+    .hero .btn {
+        padding: 0.875rem 1.5rem;
+        font-size: 0.95rem;
+    }
+
+    .hero-btns {
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .floating-card {
+        display: none;
+    }
+
+    .hero-image-container {
+        max-width: 450px;
+    }
+
+    .ai-overlay {
+        font-size: 0.65rem;
+        padding: 0.4rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero .container {
+        padding: 0 1rem;
+    }
+
+    .hero-title {
+        font-size: 1.8rem;
+        line-height: 1.2;
+    }
+
+    .hero-subtitle {
+        font-size: 0.95rem;
+    }
+
+    .hero .btn {
+        padding: 0.75rem 1.25rem;
+        font-size: 0.9rem;
+    }
+
+    .hero-btns {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero .btn {
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .hero-image-container {
+        max-width: 380px;
+    }
+
+    .ai-overlay-1 { 
+        right: 0%; 
+        top: 10%;
+    }
+    .ai-overlay-2 { 
+        left: -5%; 
+        bottom: 15%;
+    }
+    .ai-overlay-3 { 
+        right: 5%; 
+        top: 50%;
+    }
+}
+</style>
+
+<script>
+// Premium Hero Section JavaScript
+(function() {
+    // Create floating particles
+    function createParticles() {
+        const particlesContainer = document.getElementById('particles');
+        if (!particlesContainer) return;
+        
+        const particleCount = 50;
+        
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+    }
+
+    // Smooth scroll animation observer
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.animationDelay = '0s';
+                entry.target.style.animationFillMode = 'both';
+            }
+        });
+    }, observerOptions);
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', () => {
+        createParticles();
+        
+        // Observe elements for animations
+        const heroContent = document.querySelector('.hero-content');
+        const heroImage = document.querySelector('.hero-image');
+        
+        if (heroContent) observer.observe(heroContent);
+        if (heroImage) observer.observe(heroImage);
+        
+        // Add interactive hover effects
+        const buttons = document.querySelectorAll('.hero .btn');
+        buttons.forEach(btn => {
+            btn.addEventListener('mouseenter', () => {
+                btn.style.transform = 'translateY(-3px) scale(1.05)';
+            });
+            
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    });
+})();
+</script>
+
+    <!-- Login Section -->
+    <section class="login-section" id="login-form">
+        <div class="login-container container">
+            <div class="login-content">
+                <div class="login-header">
+                    <h1 class="login-title">Welcome Back</h1>
+                    <p class="login-subtitle">Sign in to access your personalized learning dashboard</p>
+                </div>
+                
+                <form class="login-form">
+                    <!-- Premium Account Dropdown -->
+                    <div class="premium-dropdown">
+                        <div class="premium-toggle" id="premiumToggle">
+                            <span>
+                                <i class="fas fa-crown"></i> 
+                                <span id="selectedAccountType">Basic Account</span>
+                            </span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="premium-options" id="premiumOptions">
+                            <div class="premium-option selected" data-type="basic">
+                                <i class="fas fa-user"></i> Basic Account
+                            </div>
+                            <div class="premium-option" data-type="student">
+                                <i class="fas fa-graduation-cap"></i> Student Pro
+                            </div>
+                            <div class="premium-option" data-type="professional">
+                                <i class="fas fa-briefcase"></i> Professional Plus
+                            </div>
+                            <div class="premium-option" data-type="enterprise">
+                                <i class="fas fa-building"></i> Enterprise
+                            </div>
+                            <div class="premium-option" data-type="institution">
+                                <i class="fas fa-school"></i> Institution
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="loginEmail">Email Address</label>
+                        <input type="email" id="loginEmail" class="form-control" required>
+                        <div class="error-message">Please enter a valid email address</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" class="form-control" required>
+                        <div class="error-message">Please enter your password</div>
+                    </div>
+                    
+                    <div class="login-options">
+                        <div class="remember-me">
+                            <input type="checkbox" id="rememberMe">
+                            <label for="rememberMe">Remember me</label>
+                        </div>
+                        <a href="forgot-password.html" class="forgot-password">Forgot password?</a>
+                    </div>
+                    
+                    <div class="form-footer">
+                        <button type="submit" class="btn btn-primary login-btn">Sign In</button>
+                        
+                        <div class="divider">or</div>
+                        
+                        <div class="social-login">
+                            <a href="#" class="social-btn google" title="Sign in with Google">
+                                <i class="fab fa-google"></i>
+                            </a>
+                            <a href="#" class="social-btn facebook" title="Sign in with Facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="social-btn apple" title="Sign in with Apple">
+                                <i class="fab fa-apple"></i>
+                            </a>
+                        </div>
+                        
+                        <p class="signup-link">
+                            Don't have an account? <a href="signup.html">Sign up</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <img src="images/BOX-LOGO-1.jpg" alt="The Box Logo" class="footer-logo-img">
+                        <span class="footer-logo-text">The Box</span>
+                    </div>
+                    <p class="footer-about">The Box is a premier global learning platform that partners with top universities to deliver cutting-edge education powered by AI. Our mission is to make world-class education accessible to everyone, everywhere.</p>
+                    <div class="footer-social">
+                        <a href="comingsoonpage.html" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="comingsoonpage.html" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="comingsoonpage.html" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="comingsoonpage.html" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="comingsoonpage.html" class="social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <div class="footer-links">
+                        <a href="comingsoonpage.html" class="footer-link">About Us</a>
+                        <a href="comingsoonpage.html" class="footer-link">Our Team</a>
+                        <a href="comingsoonpage.html" class="footer-link">Careers</a>
+                        <a href="comingsoonpage.html" class="footer-link">Press</a>
+                        <a href="comingsoonpage.html" class="footer-link">Blog</a>
+                        <a href="comingsoonpage.html" class="footer-link">Contact</a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-title">Programs</h3>
+                    <div class="footer-links">
+                        <a href="comingsoonpage.html" class="footer-link">Degree Programs</a>
+                        <a href="comingsoonpage.html" class="footer-link">Professional Certificates</a>
+                        <a href="comingsoonpage.html" class="footer-link">Short Courses</a>
+                        <a href="comingsoonpage.html" class="footer-link">Executive Education</a>
+                        <a href="comingsoonpage.html" class="footer-link">Corporate Training</a>
+                        <a href="comingsoonpage.html" class="footer-link">K-12 Programs</a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-title">Support</h3>
+                    <div class="footer-links">
+                        <a href="comingsoonpage.html" class="footer-link">Help Center</a>
+                        <a href="comingsoonpage.html" class="footer-link">FAQ</a>
+                        <a href="comingsoonpage.html" class="footer-link">Technical Support</a>
+                        <a href="comingsoonpage.html" class="footer-link">Accessibility</a>
+                        <a href="comingsoonpage.html" class="footer-link">Feedback</a>
+                        <a href="comingsoonpage.html" class="footer-link">Status</a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-title">Legal</h3>
+                    <div class="footer-links">
+                        <a href="comingsoonpage.html" class="footer-link">Terms of Service</a>
+                        <a href="comingsoonpage.html" class="footer-link">Privacy Policy</a>
+                        <a href="comingsoonpage.html" class="footer-link">Cookie Policy</a>
+                        <a href="comingsoonpage.html" class="footer-link">GDPR</a>
+                        <a href="comingsoonpage.html" class="footer-link">Honor Code</a>
+                        <a href="comingsoonpage.html" class="footer-link">Community Guidelines</a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-title">Newsletter</h3>
+                    <div class="footer-newsletter">
+                        <p>Subscribe to get updates on new courses, features, and events.</p>
+                        <form class="newsletter-form">
+                            <input type="email" class="newsletter-input" placeholder="Your email address">
+                            <button type="submit" class="newsletter-btn">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 The Box. All rights reserved. Various trademarks held by their respective owners.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
+
+    <!-- JavaScript -->
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+        
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            
+            // Update icon
+            const icon = isDark ? 'fa-sun' : 'fa-moon';
+            themeToggle.innerHTML = `<i class="fas ${icon}"></i>`;
+            mobileThemeToggle.innerHTML = `<i class="fas ${icon}"></i>`;
+            
+            // Save preference to localStorage
+            localStorage.setItem('darkMode', isDark);
+        }
+        
+        // Check for saved theme preference
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            mobileThemeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        
+        themeToggle.addEventListener('click', toggleTheme);
+        mobileThemeToggle.addEventListener('click', toggleTheme);
+
+        // Mobile Navigation
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobileNav');
+        const overlay = document.getElementById('overlay');
+        
+        hamburger.addEventListener('click', function() {
+            this.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = this.classList.contains('active') ? 'hidden' : '';
+        });
+        
+        overlay.addEventListener('click', function() {
+            hamburger.classList.remove('active');
+            mobileNav.classList.remove('active');
+            this.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        // Mobile dropdown functionality
+        document.querySelectorAll('.mobile-dropdown-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const menu = this.closest('.mobile-nav-item').querySelector('.mobile-dropdown-menu');
+                menu.classList.toggle('active');
+                this.querySelector('i').classList.toggle('fa-chevron-up');
+                this.querySelector('i').classList.toggle('fa-chevron-down');
+            });
+        });
+
+        // Premium Account Dropdown
+        const premiumToggle = document.getElementById('premiumToggle');
+        const premiumOptions = document.getElementById('premiumOptions');
+        const selectedAccountType = document.getElementById('selectedAccountType');
+        const premiumOptionElements = document.querySelectorAll('.premium-option');
+        
+        premiumToggle.addEventListener('click', function() {
+            this.classList.toggle('active');
+            premiumOptions.classList.toggle('active');
+        });
+        
+        premiumOptionElements.forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected class from all options
+                premiumOptionElements.forEach(opt => opt.classList.remove('selected'));
+                
+                // Add selected class to clicked option
+                this.classList.add('selected');
+                
+                // Update selected account type text
+                selectedAccountType.textContent = this.textContent.trim();
+                
+                // Close dropdown
+                premiumToggle.classList.remove('active');
+                premiumOptions.classList.remove('active');
+            });
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!premiumToggle.contains(e.target)) {
+                premiumToggle.classList.remove('active');
+                premiumOptions.classList.remove('active');
+            }
+        });
+
+        // Form Validation
+        const loginForm = document.querySelector('.login-form');
+        
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('loginEmail');
+            const password = document.getElementById('loginPassword');
+            
+            // Reset error states
+            email.classList.remove('error');
+            password.classList.remove('error');
+            
+            let isValid = true;
+            
+            // Validate email
+            if (!email.value || !validateEmail(email.value)) {
+                email.classList.add('error');
+                isValid = false;
+            }
+            
+            // Validate password
+            if (!password.value) {
+                password.classList.add('error');
+                isValid = false;
+            }
+            
+            if (!isValid) {
+                showToast('Please fill in all required fields correctly', 'error');
+                return;
+            }
+            
+            // In a real application, you would handle form submission here
+            showToast('Login successful! Redirecting...', 'success');
+            
+            // For demo purposes, redirect after a delay
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 1500);
+        });
+        
+        // Toast Notification Function
+        function showToast(message, type) {
+            const toastContainer = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            const icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
+            toast.innerHTML = `
+                <i class="fas ${icon}"></i>
+                <span>${message}</span>
+            `;
+            
+            toastContainer.appendChild(toast);
+            
+            // Remove toast after animation
+            setTimeout(() => {
+                toast.remove();
+            }, 3500);
+        }
+        
+        // Validation Functions
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+    </script>
+</body>
+</html>
