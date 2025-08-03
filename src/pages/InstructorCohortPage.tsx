@@ -1,6 +1,6 @@
 import {
   BellIcon,
-  BrainIcon,
+  CpuChipIcon,
   CalendarIcon,
   ChartBarIcon,
   CheckCircleIcon,
@@ -32,7 +32,7 @@ const InstructorCohortPage: React.FC = () => {
   const categories = [
     { id: 'all', name: 'All Cohorts', icon: UserGroupIcon },
     { id: 'programming', name: 'Programming', icon: CodeBracketIcon },
-    { id: 'ai-ml', name: 'AI & Machine Learning', icon: BrainIcon },
+    { id: 'ai-ml', name: 'AI & Machine Learning', icon: CpuChipIcon },
     { id: 'design', name: 'Design', icon: LightBulbIcon },
     { id: 'business', name: 'Business', icon: TrendingUpIcon },
     { id: 'data-science', name: 'Data Science', icon: ChartBarIcon },

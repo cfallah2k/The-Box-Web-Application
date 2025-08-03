@@ -34,7 +34,7 @@ import {
   FlaskIcon,
   TestTubeIcon,
   AtomIcon,
-  BrainIcon,
+  CpuChipIcon,
   NetworkIcon,
   CircuitBoardIcon,
   SatelliteIcon,

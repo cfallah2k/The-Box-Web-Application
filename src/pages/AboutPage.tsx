@@ -1,6 +1,6 @@
 import {
     AcademicCapIcon,
-    BrainIcon,
+    CpuChipIcon,
     CalendarIcon,
     FlagIcon,
     GlobeAltIcon,
@@ -154,7 +154,7 @@ const AboutPage: React.FC = () => {
       year: '2022',
       title: 'AI Integration',
       description: 'Launched our AI-powered learning platform with personalized tutoring.',
-      icon: BrainIcon
+      icon: CpuChipIcon
     },
     {
       id: 4,

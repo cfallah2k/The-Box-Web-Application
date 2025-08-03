@@ -722,7 +722,7 @@ Would you like me to help you optimize this code or explain any part of it?`,
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-4">
                     <div className="w-12 h-12 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full flex items-center justify-center">
-                      <BrainIcon className="w-6 h-6 text-white" />
+                      <CpuChipIcon className="w-6 h-6 text-white" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 dark:text-white">
@@ -776,7 +776,7 @@ Would you like me to help you optimize this code or explain any part of it?`,
                             {message.type === 'user' ? (
                               <UserIcon className="w-4 h-4" />
                             ) : (
-                              <BrainIcon className="w-4 h-4" />
+                              <CpuChipIcon className="w-4 h-4" />
                             )}
                           </div>
                           <div className={`flex-1 ${message.type === 'user' ? 'text-right' : ''}`}>
@@ -869,7 +869,7 @@ Would you like me to help you optimize this code or explain any part of it?`,
                   >
                     <div className="flex items-center space-x-3">
                       <div className="w-8 h-8 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full flex items-center justify-center">
-                        <BrainIcon className="w-4 h-4 text-white" />
+                        <CpuChipIcon className="w-4 h-4 text-white" />
                       </div>
                       <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
                         <div className="flex items-center space-x-2">

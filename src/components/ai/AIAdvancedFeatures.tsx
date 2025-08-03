@@ -87,7 +87,7 @@ const AIAdvancedFeatures: React.FC<AIAdvancedFeaturesProps> = ({
   ];
 
   const aiModels = [
-    { id: 'gpt-4', name: 'GPT-4 Turbo', description: 'Most advanced reasoning and creativity', icon: BrainIcon, color: 'text-blue-500' },
+    { id: 'gpt-4', name: 'GPT-4 Turbo', description: 'Most advanced reasoning and creativity', icon: CpuChipIcon, color: 'text-blue-500' },
     { id: 'claude-3', name: 'Claude 3 Opus', description: 'Best for analysis and coding', icon: BeakerIcon, color: 'text-purple-500' },
     { id: 'gemini-pro', name: 'Gemini Pro', description: 'Excellent for multimodal tasks', icon: SparklesIcon, color: 'text-green-500' },
     { id: 'custom', name: 'Custom Model', description: 'Your specialized AI model', icon: CpuChipIcon, color: 'text-orange-500' },
@@ -201,7 +201,7 @@ print(f"Fibonacci of 10: {result}")`;
 
           <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
             <div className="flex items-center space-x-2">
-              <BrainIcon className="w-5 h-5 text-purple-500" />
+                              <CpuChipIcon className="w-5 h-5 text-purple-500" />
               <span className="text-sm font-medium">Context Aware</span>
             </div>
             <button

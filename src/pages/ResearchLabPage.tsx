@@ -3,7 +3,7 @@ import {
   BeakerIcon,
   BellIcon,
   BookmarkIcon,
-  BrainIcon,
+  CpuChipIcon,
   CalendarIcon,
   ChartBarIcon,
   CloudIcon,
@@ -29,7 +29,7 @@ const ResearchLabPage: React.FC = () => {
 
   const categories = [
     { id: 'all', name: 'All Research', icon: BeakerIcon },
-    { id: 'ai-ml', name: 'AI & Machine Learning', icon: BrainIcon },
+    { id: 'ai-ml', name: 'AI & Machine Learning', icon: CpuChipIcon },
     { id: 'data-science', name: 'Data Science', icon: ChartBarIcon },
     { id: 'biotech', name: 'Biotechnology', icon: DnaIcon },
     { id: 'quantum', name: 'Quantum Computing', icon: AtomIcon },
