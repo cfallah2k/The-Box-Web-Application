@@ -14,7 +14,7 @@ import {
   PencilIcon,
   TrashIcon,
   PlusIcon,
-  TrendingUpIcon,
+  ChartBarIcon,
   GlobeAltIcon
 } from '@heroicons/react/24/outline';
 import { useAuth } from '../contexts/AuthContext';
@@ -28,7 +28,7 @@ const AdminDashboardPage: React.FC = () => {
     { id: 'overview', name: 'Overview', icon: ChartBarIcon },
     { id: 'users', name: 'Users', icon: UserGroupIcon },
     { id: 'courses', name: 'Courses', icon: BookOpenIcon },
-    { id: 'analytics', name: 'Analytics', icon: TrendingUpIcon },
+    { id: 'analytics', name: 'Analytics', icon: ChartBarIcon },
     { id: 'system', name: 'System', icon: Cog6ToothIcon },
   ];
 

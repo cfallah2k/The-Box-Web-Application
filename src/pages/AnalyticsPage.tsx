@@ -8,7 +8,7 @@ import {
   FireIcon,
   HeartIcon,
   TrendingDownIcon,
-  TrendingUpIcon,
+  ChartBarIcon,
   TrophyIcon,
   UserGroupIcon,
 } from '@heroicons/react/24/outline';
@@ -230,7 +230,7 @@ const AnalyticsPage: React.FC = () => {
                   </p>
                   <div className="flex items-center mt-1">
                     {metric.changeType === 'increase' ? (
-                      <TrendingUpIcon className="w-4 h-4 text-green-500 mr-1" />
+                      <ChartBarIcon className="w-4 h-4 text-green-500 mr-1" />
                     ) : (
                       <TrendingDownIcon className="w-4 h-4 text-red-500 mr-1" />
                     )}

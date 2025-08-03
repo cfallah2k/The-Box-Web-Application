@@ -15,7 +15,7 @@ import {
   PlusIcon,
   QuestionMarkCircleIcon,
   ShareIcon,
-  TrendingUpIcon,
+  ChartBarIcon,
   TrophyIcon,
   UserIcon,
 } from '@heroicons/react/24/outline';
@@ -187,7 +187,7 @@ const CourseCheckPage: React.FC = () => {
     { id: 'assessments', name: 'Assessments', icon: AcademicCapIcon },
     { id: 'progress', name: 'Progress Reports', icon: ChartBarIcon },
     { id: 'certificates', name: 'Certificates', icon: TrophyIcon },
-    { id: 'analytics', name: 'Analytics', icon: TrendingUpIcon },
+    { id: 'analytics', name: 'Analytics', icon: ChartBarIcon },
   ];
 
   const filteredAssessments = assessments.filter(assessment => {

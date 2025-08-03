@@ -10,7 +10,7 @@ import {
   LightBulbIcon,
   MagnifyingGlassIcon,
   PlusIcon,
-  TrendingUpIcon,
+  ChartBarIcon,
   UserGroupIcon,
   UserIcon,
   UsersIcon,
@@ -30,7 +30,7 @@ const CohortPage: React.FC = () => {
     { id: 'programming', name: 'Programming', icon: CodeBracketIcon },
     { id: 'ai-ml', name: 'AI & Machine Learning', icon: CpuChipIcon },
     { id: 'design', name: 'Design', icon: LightBulbIcon },
-    { id: 'business', name: 'Business', icon: TrendingUpIcon },
+    { id: 'business', name: 'Business', icon: ChartBarIcon },
     { id: 'data-science', name: 'Data Science', icon: ChartBarIcon },
   ];
 

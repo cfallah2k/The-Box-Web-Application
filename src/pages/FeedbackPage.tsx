@@ -8,7 +8,7 @@ import {
   EyeIcon,
   LightBulbIcon,
   PlusIcon,
-  TrendingUpIcon,
+  ChartBarIcon,
   UserGroupIcon,
 } from '@heroicons/react/24/outline';
 import { motion } from 'framer-motion';
@@ -144,7 +144,7 @@ const FeedbackPage: React.FC = () => {
       value: '24h',
       change: '-2h',
       changeType: 'decrease',
-      icon: TrendingUpIcon,
+      icon: ChartBarIcon,
       color: 'bg-purple-500',
     },
   ];

@@ -9,7 +9,7 @@ import {
   ChartBarIcon,
   TrophyIcon,
   FireIcon,
-  TrendingUpIcon,
+  ChartBarIcon,
   PlusIcon,
   EyeIcon,
   HeartIcon,
@@ -192,7 +192,7 @@ const NotificationsPage: React.FC = () => {
       value: '12',
       change: '+3',
       changeType: 'increase',
-      icon: TrendingUpIcon,
+      icon: ChartBarIcon,
       color: 'bg-green-500'
     },
     {

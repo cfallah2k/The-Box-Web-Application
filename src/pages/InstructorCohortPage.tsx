@@ -1,12 +1,12 @@
 import {
   BellIcon,
-  CpuChipIcon,
   CalendarIcon,
   ChartBarIcon,
   CheckCircleIcon,
   ClockIcon,
   CodeBracketIcon,
   CogIcon,
+  CpuChipIcon,
   EnvelopeIcon,
   EyeIcon,
   LightBulbIcon,
@@ -14,7 +14,6 @@ import {
   PhoneIcon,
   PlusIcon,
   StarIcon,
-  TrendingUpIcon,
   TrophyIcon,
   UserGroupIcon,
   UsersIcon,
@@ -34,7 +33,7 @@ const InstructorCohortPage: React.FC = () => {
     { id: 'programming', name: 'Programming', icon: CodeBracketIcon },
     { id: 'ai-ml', name: 'AI & Machine Learning', icon: CpuChipIcon },
     { id: 'design', name: 'Design', icon: LightBulbIcon },
-    { id: 'business', name: 'Business', icon: TrendingUpIcon },
+    { id: 'business', name: 'Business', icon: ChartBarIcon },
     { id: 'data-science', name: 'Data Science', icon: ChartBarIcon },
   ];
 

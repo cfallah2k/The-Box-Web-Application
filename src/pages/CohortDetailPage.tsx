@@ -12,7 +12,6 @@ import {
   PlusIcon,
   ShareIcon,
   StarIcon,
-  TrendingUpIcon,
   UsersIcon,
 } from '@heroicons/react/24/outline';
 import { motion } from 'framer-motion';
@@ -184,7 +183,7 @@ const CohortDetailPage: React.FC = () => {
       value: 92,
       change: '+5%',
       changeType: 'increase',
-      icon: TrendingUpIcon,
+      icon: ChartBarIcon,
       color: 'bg-green-500',
     },
     {
