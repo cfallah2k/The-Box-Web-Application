@@ -17,8 +17,8 @@ import {
   TrendingUpIcon,
   GlobeAltIcon
 } from '@heroicons/react/24/outline';
-import { useAuth } from '@/contexts/AuthContext';
-import { Badge } from '@/components/ui/Badge';
+import { useAuth } from '../contexts/AuthContext';
+import { Badge } from '../components/ui/Badge';
 
 const AdminDashboardPage: React.FC = () => {
   const { user } = useAuth();

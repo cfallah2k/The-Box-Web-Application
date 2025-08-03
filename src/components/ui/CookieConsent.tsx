@@ -14,7 +14,7 @@ import {
   UserIcon,
   SparklesIcon
 } from '@heroicons/react/24/outline';
-import { useTheme } from '@/contexts/ThemeContext';
+import { useTheme } from '../../contexts/ThemeContext';
 
 interface CookieConsentProps {
   isVisible: boolean;

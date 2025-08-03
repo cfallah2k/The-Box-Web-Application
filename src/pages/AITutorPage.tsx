@@ -17,7 +17,6 @@ import {
   PlusIcon,
   ShareIcon,
   BookmarkIcon,
-  BrainIcon,
   SparklesIcon,
   BeakerIcon,
   RocketLaunchIcon,
@@ -56,11 +55,11 @@ import {
   AcademicCapIcon,
   ChartBarIcon
 } from '@heroicons/react/24/outline';
-import { useAuth } from '@/contexts/AuthContext';
-import { useToast } from '@/contexts/ToastContext';
-import { Badge } from '@/components/ui/Badge';
-import ProgressRing from '@/components/ui/ProgressRing';
-import AIAdvancedFeatures from '@/components/ai/AIAdvancedFeatures';
+import { useAuth } from '../contexts/AuthContext';
+import { useToast } from '../contexts/ToastContext';
+import { Badge } from '../components/ui/Badge';
+import ProgressRing from '../components/ui/ProgressRing';
+import AIAdvancedFeatures from '../components/ai/AIAdvancedFeatures';
 
 interface Message {
   id: string;
@@ -152,7 +151,7 @@ const AITutorPage: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const quickPrompts = [
-    { text: "🚀 Advanced Concept Deep Dive", icon: BrainIcon, category: 'learning' },
+    { text: "🚀 Advanced Concept Deep Dive", icon: CpuChipIcon, category: 'learning' },
     { text: "💻 Real-time Code Debugging", icon: CodeBracketIcon, category: 'coding' },
     { text: "📚 Personalized Learning Plan", icon: AcademicCapIcon, category: 'planning' },
     { text: "🧪 Interactive Practice Session", icon: BeakerIcon, category: 'practice' },
