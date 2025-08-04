@@ -19,12 +19,24 @@ import {
   UsersIcon,
   WifiIcon,
   XMarkIcon,
+  MagnifyingGlassIcon,
+  FireIcon,
+  ClockIcon,
+  HeartIcon,
+  BookmarkIcon,
+  ShareIcon,
+  EyeIcon,
+  ArrowTrendingUpIcon,
+  BoltIcon,
+  LightBulbIcon,
+  PuzzlePieceIcon,
 } from '@heroicons/react/24/outline';
-import { AnimatePresence, motion } from 'framer-motion';
-import React, { useEffect, useState } from 'react';
+import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { usePWA } from '../hooks/usePWA';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 const HomePage: React.FC = () => {
   const { isAuthenticated, user } = useAuth();
@@ -33,6 +45,35 @@ const HomePage: React.FC = () => {
   const [isOffline, setIsOffline] = useState(false);
   const [showTutorial, setShowTutorial] = useState(false);
   const [showInstallPrompt, setShowInstallPrompt] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showSearch, setShowSearch] = useState(false);
+  const [activeCourse, setActiveCourse] = useState<number | null>(null);
+  const [liveStats, setLiveStats] = useState({
+    activeUsers: 0,
+    coursesCompleted: 0,
+    aiConversations: 0,
+    countriesReached: 0,
+  });
+
+  // Scroll animations
+  const { scrollY } = useScroll();
+  const y1 = useTransform(scrollY, [0, 300], [0, -100]);
+  const y2 = useTransform(scrollY, [0, 300], [0, 100]);
+  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
+
+  // Live statistics animation
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setLiveStats(prev => ({
+        activeUsers: prev.activeUsers + Math.floor(Math.random() * 10),
+        coursesCompleted: prev.coursesCompleted + Math.floor(Math.random() * 5),
+        aiConversations: prev.aiConversations + Math.floor(Math.random() * 20),
+        countriesReached: prev.countriesReached + Math.floor(Math.random() * 2),
+      }));
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   // Check online status
   useEffect(() => {
@@ -168,6 +209,58 @@ const HomePage: React.FC = () => {
     { city: 'Sydney', country: 'Australia', coordinates: [-33.8688, 151.2093] },
   ];
 
+  // Interactive Course Cards
+  const featuredCourses = [
+    {
+      id: 1,
+      title: 'Advanced Machine Learning',
+      instructor: 'Dr. Sarah Chen',
+      rating: 4.9,
+      students: 15420,
+      duration: '12 weeks',
+      level: 'Advanced',
+      category: 'AI & ML',
+      image: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=400',
+      progress: 0,
+      isEnrolled: false,
+      price: '$299',
+      originalPrice: '$399',
+      features: ['Live Sessions', 'Certificate', '1-on-1 Mentoring'],
+    },
+    {
+      id: 2,
+      title: 'Web Development Bootcamp',
+      instructor: 'Mike Johnson',
+      rating: 4.8,
+      students: 23450,
+      duration: '8 weeks',
+      level: 'Beginner',
+      category: 'Programming',
+      image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400',
+      progress: 0,
+      isEnrolled: false,
+      price: '$199',
+      originalPrice: '$299',
+      features: ['Project-Based', 'Portfolio', 'Job Support'],
+    },
+    {
+      id: 3,
+      title: 'Data Science Fundamentals',
+      instructor: 'Dr. Emily Rodriguez',
+      rating: 4.9,
+      students: 18760,
+      duration: '10 weeks',
+      level: 'Intermediate',
+      category: 'Data Science',
+      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400',
+      progress: 0,
+      isEnrolled: false,
+      price: '$249',
+      originalPrice: '$349',
+      features: ['Real Projects', 'Industry Tools', 'Career Guidance'],
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
       {/* Offline Notification */}
@@ -177,7 +270,7 @@ const HomePage: React.FC = () => {
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -50 }}
-            className="fixed top-4 left-4 right-4 z-50 bg-yellow-500 text-white p-4 rounded-lg shadow-lg flex items-center justify-between"
+            className="fixed top-4 left-4 right-4 z-50 bg-yellow-500 text-white p-4 rounded-xl shadow-lg flex items-center justify-between"
           >
             <div className="flex items-center">
               <WifiIcon className="h-5 w-5 mr-2" />
@@ -199,30 +292,28 @@ const HomePage: React.FC = () => {
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -50 }}
-            className="fixed top-4 left-4 right-4 z-50 bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 rounded-lg shadow-xl"
+            className="fixed top-4 left-4 right-4 z-50 bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 rounded-xl shadow-lg"
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <DevicePhoneMobileIcon className="h-6 w-6 mr-3" />
                 <div>
-                  <div className="font-semibold">Install The Box App</div>
-                  <div className="text-sm text-blue-100">
-                    Get the full experience on your device
-                  </div>
+                  <h3 className="font-semibold">Install The Box</h3>
+                  <p className="text-sm opacity-90">Get the full experience on your device</p>
                 </div>
               </div>
-              <div className="flex gap-2">
+              <div className="flex items-center space-x-2">
                 <button
-                  onClick={() => setShowInstallPrompt(false)}
-                  className="px-3 py-1 text-sm border border-white/30 rounded hover:bg-white/10"
-                >
-                  Later
-                </button>
-                <button
-                  onClick={install}
-                  className="px-4 py-2 bg-white text-blue-600 rounded font-semibold hover:bg-gray-100"
+                  onClick={() => install()}
+                  className="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
                 >
                   Install
+                </button>
+                <button
+                  onClick={() => setShowInstallPrompt(false)}
+                  className="text-white hover:text-gray-200"
+                >
+                  <XMarkIcon className="h-5 w-5" />
                 </button>
               </div>
             </div>
@@ -230,159 +321,528 @@ const HomePage: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* Hero Section */}
-      <section className="relative overflow-hidden min-h-screen flex items-center">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-5"></div>
-        <div className="absolute inset-0">
-          <div className="absolute top-20 left-20 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
-          <div className="absolute top-40 right-20 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
-          <div className="absolute -bottom-8 left-40 w-72 h-72 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
-        </div>
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      {/* Hero Section with Parallax */}
+      <section className="relative overflow-hidden">
+        <motion.div style={{ y: y1 }} className="absolute inset-0 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 opacity-10"></motion.div>
+        
+        <div className="container-responsive pt-20 pb-16">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Hero Content */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
+              className="space-y-8"
             >
-              <div className="flex items-center mb-6">
-                <div className="flex items-center bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold mr-4">
-                  <SparklesIcon className="h-4 w-4 mr-2" />
-                  AI-Powered Learning
-                </div>
-                <div className="flex items-center text-gray-600">
-                  <StarIcon className="h-4 w-4 text-yellow-400 mr-1" />
-                  <span className="text-sm">4.9/5 Rating</span>
-                </div>
+              <div className="space-y-4">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full text-sm font-medium"
+                >
+                  <SparklesIcon className="w-4 h-4 mr-2" />
+                  AI-Powered Learning Platform
+                </motion.div>
+                
+                <motion.h1
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white leading-tight"
+                >
+                  Transform Your
+                  <span className="gradient-text block">Learning Journey</span>
+                </motion.h1>
+                
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                  className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl"
+                >
+                  Experience personalized education with AI tutors, interactive features, and a global community of learners.
+                </motion.p>
               </div>
 
-              <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
-                The Future of
-                <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent block">
-                  Education
-                </span>
-                is Here
-              </h1>
-
-              <p className="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed">
-                World-class AI-powered education platform designed to transform
-                learning and unlock your full potential. Learn anywhere,
-                anytime, offline or online.
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                {!isAuthenticated ? (
-                  <>
-                    <Link
-                      to="/signup"
-                      className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center justify-center"
-                    >
-                      <RocketLaunchIcon className="w-5 h-5 mr-2" />
-                      Get Started Free
-                    </Link>
-                    <button
-                      onClick={() => setShowTutorial(true)}
-                      className="border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-xl font-semibold text-lg hover:border-blue-600 hover:text-blue-600 transition-all duration-200 flex items-center justify-center"
-                    >
-                      <PlayIcon className="w-5 h-5 mr-2" />
-                      Watch Demo
-                    </button>
-                  </>
-                ) : (
-                  <Link
-                    to="/dashboard"
-                    className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center justify-center"
+              {/* Live Statistics */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="grid grid-cols-2 md:grid-cols-4 gap-4"
+              >
+                {[
+                  { label: 'Active Users', value: liveStats.activeUsers.toLocaleString(), icon: UsersIcon },
+                  { label: 'Courses Completed', value: liveStats.coursesCompleted.toLocaleString(), icon: TrophyIcon },
+                  { label: 'AI Conversations', value: liveStats.aiConversations.toLocaleString(), icon: ChatBubbleLeftRightIcon },
+                  { label: 'Countries', value: liveStats.countriesReached.toString(), icon: GlobeAltIcon },
+                ].map((stat, index) => (
+                  <motion.div
+                    key={stat.label}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.6 + index * 0.1 }}
+                    className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-lg border border-gray-200 dark:border-gray-700"
                   >
-                    <RocketLaunchIcon className="w-5 h-5 mr-2" />
-                    Go to Dashboard
-                  </Link>
-                )}
-              </div>
-
-              {/* Trusted By Section */}
-              <div className="mb-8">
-                <p className="text-sm text-gray-500 mb-4">
-                  Trusted by leading institutions worldwide
-                </p>
-                <div className="flex flex-wrap gap-4">
-                  {trustedBy.slice(0, 6).map((company, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
-                      className="bg-white px-4 py-2 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-all duration-200"
-                    >
-                      <div className="flex items-center">
-                        <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-sm mr-2">
-                          {company.logo}
+                    <div className="flex items-center justify-between">
+                      <stat.icon className="w-6 h-6 text-blue-600" />
+                      <div className="text-right">
+                        <div className="text-2xl font-bold text-gray-900 dark:text-white">
+                          {stat.value}
                         </div>
-                        <span className="text-sm font-medium text-gray-700">
-                          {company.name}
-                        </span>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">
+                          {stat.label}
+                        </div>
                       </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+
+              {/* CTA Buttons */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7 }}
+                className="flex flex-col sm:flex-row gap-4"
+              >
+                <Link
+                  to="/courses"
+                  className="btn-primary flex items-center justify-center space-x-2"
+                >
+                  <RocketLaunchIcon className="w-5 h-5" />
+                  <span>Start Learning</span>
+                </Link>
+                <button
+                  onClick={() => setShowTutorial(true)}
+                  className="btn-secondary flex items-center justify-center space-x-2"
+                >
+                  <PlayIcon className="w-5 h-5" />
+                  <span>Watch Demo</span>
+                </button>
+              </motion.div>
             </motion.div>
 
+            {/* AI Tutor Demo */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
               className="relative"
             >
-              <div className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-100">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex items-center">
-                    <div className="w-3 h-3 bg-red-500 rounded-full mr-2"></div>
-                    <div className="w-3 h-3 bg-yellow-500 rounded-full mr-2"></div>
-                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+              <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-6 border border-gray-200 dark:border-gray-700">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
+                      <CpuChipIcon className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 dark:text-white">AI Tutor</h3>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Online now</p>
+                    </div>
                   </div>
-                  <div className="text-sm text-gray-500">AI Tutor Demo</div>
+                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
                 </div>
-
-                <div className="space-y-4">
+                
+                <div className="space-y-3">
                   <div className="flex items-start space-x-3">
-                    <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                      <CpuChipIcon className="w-4 h-4 text-white" />
+                    <div className="w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center">
+                      <span className="text-sm font-medium">U</span>
                     </div>
-                    <div className="bg-gray-100 rounded-lg p-3 max-w-xs">
-                      <p className="text-sm">
-                        Hello! I'm your AI tutor. How can I help you learn
-                        today?
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start space-x-3 justify-end">
-                    <div className="bg-blue-600 text-white rounded-lg p-3 max-w-xs">
-                      <p className="text-sm">
+                    <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-3 max-w-xs">
+                      <p className="text-sm text-gray-700 dark:text-gray-300">
                         Can you help me understand machine learning?
                       </p>
                     </div>
-                    <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
-                      <UserGroupIcon className="w-4 h-4 text-gray-600" />
-                    </div>
                   </div>
-
-                  <div className="flex items-start space-x-3">
-                    <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                      <CpuChipIcon className="w-4 h-4 text-white" />
-                    </div>
-                    <div className="bg-gray-100 rounded-lg p-3 max-w-xs">
-                      <p className="text-sm">
-                        Absolutely! Let me create a personalized learning path
-                        for you...
+                  
+                  <div className="flex items-start space-x-3 justify-end">
+                    <div className="bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg p-3 max-w-xs">
+                      <p className="text-sm text-white">
+                        Absolutely! Machine learning is a subset of AI that enables computers to learn from data. Let me explain the key concepts...
                       </p>
                     </div>
+                    <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
+                      <CpuChipIcon className="w-5 h-5 text-white" />
+                    </div>
                   </div>
+                </div>
+                
+                <div className="mt-4 flex items-center space-x-2">
+                  <input
+                    type="text"
+                    placeholder="Ask your AI tutor..."
+                    className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                  />
+                  <button className="p-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg hover:shadow-lg transition-all duration-200">
+                    <ArrowDownTrayIcon className="w-4 h-4" />
+                  </button>
                 </div>
               </div>
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* Enhanced Search Section */}
+      <section className="py-16 bg-white dark:bg-gray-900">
+        <div className="container-responsive">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center space-y-4 mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
+              Find Your Perfect Course
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              Search through thousands of courses, filter by category, level, and instructor
+            </p>
+          </motion.div>
+
+          {/* Advanced Search */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="max-w-4xl mx-auto"
+          >
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <MagnifyingGlassIcon className="h-6 w-6 text-gray-400" />
+              </div>
+              <input
+                type="text"
+                placeholder="Search courses, topics, instructors..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={() => setShowSearch(true)}
+                className="w-full pl-12 pr-4 py-4 text-lg border border-gray-300 dark:border-gray-600 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-white shadow-lg"
+              />
+              <button className="absolute inset-y-0 right-0 pr-4 flex items-center">
+                <SparklesIcon className="h-6 w-6 text-blue-600" />
+              </button>
+            </div>
+
+            {/* Search Filters */}
+            <div className="mt-6 flex flex-wrap gap-3 justify-center">
+              {['All', 'Programming', 'AI & ML', 'Data Science', 'Business', 'Design', 'Marketing'].map((filter) => (
+                <button
+                  key={filter}
+                  className="px-4 py-2 rounded-full border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200"
+                >
+                  {filter}
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Interactive Course Cards */}
+      <section className="py-16 bg-gray-50 dark:bg-gray-800">
+        <div className="container-responsive">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center space-y-4 mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
+              Featured Courses
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              Discover our most popular courses with interactive previews
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {featuredCourses.map((course, index) => (
+              <motion.div
+                key={course.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                whileHover={{ y: -10 }}
+                className="group"
+              >
+                <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-200 dark:border-gray-700">
+                  {/* Course Image */}
+                  <div className="relative overflow-hidden">
+                    <img
+                      src={course.image}
+                      alt={course.title}
+                      className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                    <div className="absolute top-4 left-4">
+                      <span className="px-2 py-1 bg-blue-600 text-white text-xs font-medium rounded-full">
+                        {course.level}
+                      </span>
+                    </div>
+                    <div className="absolute top-4 right-4">
+                      <button className="p-2 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-white/30 transition-colors">
+                        <HeartIcon className="w-5 h-5" />
+                      </button>
+                    </div>
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <div className="flex items-center justify-between text-white">
+                        <div className="flex items-center space-x-1">
+                          <StarIcon className="w-4 h-4 text-yellow-400" />
+                          <span className="text-sm font-medium">{course.rating}</span>
+                        </div>
+                        <span className="text-sm opacity-90">{course.students.toLocaleString()} students</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Course Content */}
+                  <div className="p-6">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm text-blue-600 font-medium">{course.category}</span>
+                      <div className="flex items-center space-x-2">
+                        <span className="text-sm text-gray-500 dark:text-gray-400">{course.duration}</span>
+                        <ClockIcon className="w-4 h-4 text-gray-400" />
+                      </div>
+                    </div>
+                    
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 transition-colors">
+                      {course.title}
+                    </h3>
+                    
+                    <p className="text-gray-600 dark:text-gray-300 mb-4">
+                      by {course.instructor}
+                    </p>
+
+                    {/* Course Features */}
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {course.features.map((feature) => (
+                        <span
+                          key={feature}
+                          className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-xs text-gray-600 dark:text-gray-300 rounded-full"
+                        >
+                          {feature}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Progress Bar */}
+                    {course.isEnrolled && (
+                      <div className="mb-4">
+                        <div className="flex items-center justify-between text-sm mb-1">
+                          <span className="text-gray-600 dark:text-gray-400">Progress</span>
+                          <span className="text-gray-900 dark:text-white font-medium">{course.progress}%</span>
+                        </div>
+                        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                          <div
+                            className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300"
+                            style={{ width: `${course.progress}%` }}
+                          ></div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Price and Action */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-2xl font-bold text-gray-900 dark:text-white">
+                          {course.price}
+                        </span>
+                        {course.originalPrice && (
+                          <span className="text-lg text-gray-500 line-through">
+                            {course.originalPrice}
+                          </span>
+                        )}
+                      </div>
+                      <button className="btn-primary">
+                        {course.isEnrolled ? 'Continue' : 'Enroll Now'}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Trusted By Section */}
+      <section className="py-16 bg-white dark:bg-gray-900">
+        <div className="container-responsive">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center space-y-4 mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
+              Trusted by Leading Institutions
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              Join thousands of learners from top universities and companies worldwide
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="grid grid-cols-2 md:grid-cols-4 gap-8"
+          >
+            {trustedBy.map((institution, index) => (
+              <motion.div
+                key={institution.name}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                whileHover={{ scale: 1.05 }}
+                className="flex flex-col items-center space-y-3 p-6 bg-gray-50 dark:bg-gray-800 rounded-xl hover:shadow-lg transition-all duration-300"
+              >
+                <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center text-white font-bold text-lg">
+                  {institution.logo}
+                </div>
+                <div className="text-center">
+                  <h3 className="font-semibold text-gray-900 dark:text-white">
+                    {institution.name}
+                  </h3>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    {institution.type}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-16 bg-gray-50 dark:bg-gray-800">
+        <div className="container-responsive">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center space-y-4 mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
+              Why Choose The Box?
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              Experience the future of education with our cutting-edge features
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {features.map((feature, index) => (
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                whileHover={{ y: -10 }}
+                className="group"
+              >
+                <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 dark:border-gray-700">
+                  <div className={`w-16 h-16 ${feature.color} rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                    <feature.icon className="w-8 h-8 text-white" />
+                  </div>
+                  
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+                    {feature.title}
+                  </h3>
+                  
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    {feature.description}
+                  </p>
+                  
+                  <div className="flex items-center space-x-2">
+                    <ArrowTrendingUpIcon className="w-5 h-5 text-green-500" />
+                    <span className="text-sm font-medium text-green-600 dark:text-green-400">
+                      {feature.stats}
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Live Global Map */}
+      <section className="py-16 bg-white dark:bg-gray-900">
+        <div className="container-responsive">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center space-y-4 mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
+              Global Learning Community
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              See where our learners are located around the world
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="relative"
+          >
+            <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-900 rounded-2xl p-8 border border-gray-200 dark:border-gray-700">
+              <div className="grid md:grid-cols-2 gap-8 items-center">
+                <div className="space-y-6">
+                  <div className="grid grid-cols-2 gap-4">
+                    {locations.map((location, index) => (
+                      <motion.div
+                        key={location.city}
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.6, delay: index * 0.1 }}
+                        className="flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700"
+                      >
+                        <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
+                        <div>
+                          <h3 className="font-semibold text-gray-900 dark:text-white">
+                            {location.city}
+                          </h3>
+                          <p className="text-sm text-gray-500 dark:text-gray-400">
+                            {location.country}
+                          </p>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                  
+                  <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">Active Learners</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">New This Week</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="relative">
+                  <div className="w-full h-64 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-gray-700 dark:to-gray-800 rounded-xl flex items-center justify-center">
+                    <div className="text-center">
+                      <GlobeAltIcon className="w-16 h-16 text-blue-500 mx-auto mb-4" />
+                      <p className="text-gray-600 dark:text-gray-400">
+                        Interactive Map Coming Soon
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -393,249 +853,73 @@ const HomePage: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
-            onClick={() => setShowTutorial(false)}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
           >
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white rounded-2xl p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto"
-              onClick={e => e.stopPropagation()}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="bg-white dark:bg-gray-800 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
             >
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-gray-900">
-                  Platform Tutorial
-                </h2>
-                <button
-                  onClick={() => setShowTutorial(false)}
-                  className="text-gray-400 hover:text-gray-600"
-                >
-                  <XMarkIcon className="h-6 w-6" />
-                </button>
+              <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+                    Welcome to The Box
+                  </h2>
+                  <button
+                    onClick={() => setShowTutorial(false)}
+                    className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                  >
+                    <XMarkIcon className="w-6 h-6" />
+                  </button>
+                </div>
               </div>
-
-              <div className="space-y-6">
+              
+              <div className="p-6 space-y-6">
                 {tutorialSteps.map((step, index) => (
                   <motion.div
-                    key={index}
+                    key={step.title}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
+                    transition={{ delay: index * 0.2 }}
                     className="flex items-start space-x-4"
                   >
-                    <div
-                      className={`w-12 h-12 bg-gradient-to-r ${step.color} rounded-lg flex items-center justify-center`}
-                    >
+                    <div className={`w-12 h-12 bg-gradient-to-r ${step.color} rounded-xl flex items-center justify-center flex-shrink-0`}>
                       <step.icon className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                         {step.title}
                       </h3>
-                      <p className="text-gray-600">{step.description}</p>
+                      <p className="text-gray-600 dark:text-gray-300">
+                        {step.description}
+                      </p>
                     </div>
                   </motion.div>
                 ))}
               </div>
-
-              <div className="mt-8 flex justify-end">
-                <button
-                  onClick={() => setShowTutorial(false)}
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-200"
-                >
-                  Got it!
-                </button>
+              
+              <div className="p-6 border-t border-gray-200 dark:border-gray-700">
+                <div className="flex space-x-3">
+                  <button
+                    onClick={() => setShowTutorial(false)}
+                    className="flex-1 btn-secondary"
+                  >
+                    Got it
+                  </button>
+                  <Link
+                    to="/courses"
+                    className="flex-1 btn-primary"
+                    onClick={() => setShowTutorial(false)}
+                  >
+                    Start Learning
+                  </Link>
+                </div>
               </div>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Stats Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="text-center group"
-              >
-                <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-200">
-                  <stat.icon className="w-8 h-8 text-white" />
-                </div>
-                <div className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-                  {stat.number}
-                </div>
-                <div className="text-gray-600 font-medium">{stat.label}</div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Why Choose The Box?
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Our platform combines cutting-edge AI technology with proven
-              educational methodologies to deliver an unparalleled learning
-              experience.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 group border border-gray-100"
-              >
-                <div
-                  className={`w-16 h-16 ${feature.color} rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-200`}
-                >
-                  <feature.icon className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600 mb-4">{feature.description}</p>
-                <div className="text-sm text-blue-600 font-semibold">
-                  {feature.stats}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Live Map Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Global Presence
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Join our global community of learners and educators from around
-              the world
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white">
-                <div className="flex items-center mb-6">
-                  <GlobeIcon className="w-8 h-8 mr-3" />
-                  <h3 className="text-2xl font-bold">Live Global Map</h3>
-                </div>
-                <div className="space-y-4">
-                  {locations.map((location, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      className="flex items-center justify-between bg-white/10 rounded-lg p-4"
-                    >
-                      <div className="flex items-center">
-                        <MapPinIcon className="w-5 h-5 mr-3" />
-                        <div>
-                          <div className="font-semibold">{location.city}</div>
-                          <div className="text-sm text-blue-100">
-                            {location.country}
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex items-center">
-                        <div className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></div>
-                        <span className="text-sm">Active</span>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative"
-            >
-              <div className="bg-gray-100 rounded-2xl p-8 h-96 flex items-center justify-center">
-                <div className="text-center">
-                  <GlobeIcon className="w-24 h-24 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-600">Interactive World Map</p>
-                  <p className="text-sm text-gray-500 mt-2">
-                    Showing real-time learner activity
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="text-4xl font-bold text-white mb-6">
-              Ready to Transform Your Learning?
-            </h2>
-            <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-              Join thousands of learners who are already experiencing the future
-              of education.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                to={isAuthenticated ? '/dashboard' : '/signup'}
-                className="bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-gray-100 transition-all duration-200 inline-flex items-center justify-center"
-              >
-                <RocketLaunchIcon className="w-5 h-5 mr-2" />
-                {isAuthenticated ? 'Go to Dashboard' : 'Start Learning Today'}
-              </Link>
-              {isInstallable && (
-                <button
-                  onClick={install}
-                  className="border-2 border-white text-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white hover:text-blue-600 transition-all duration-200 inline-flex items-center justify-center"
-                >
-                  <ArrowDownTrayIcon className="w-5 h-5 mr-2" />
-                  Install App
-                </button>
-              )}
-            </div>
-          </motion.div>
-        </div>
-      </section>
     </div>
   );
 };
