@@ -9,10 +9,20 @@
   
   body {
     @apply font-sans text-gray-900 bg-white dark:text-gray-100 dark:bg-gray-900;
+    /* Prevent horizontal scroll on mobile */
+    overflow-x: hidden;
   }
   
   * {
     @apply border-gray-200 dark:border-gray-700;
+  }
+
+  /* Improve touch targets on mobile */
+  @media (max-width: 768px) {
+    button, a, [role="button"] {
+      min-height: 44px;
+      min-width: 44px;
+    }
   }
 }
 
@@ -60,6 +70,43 @@
   .glass-dark {
     @apply bg-gray-900/10 backdrop-blur-md border border-gray-700/20;
   }
+
+  /* Responsive container */
+  .container-responsive {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Responsive grid */
+  .grid-responsive {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6;
+  }
+
+  /* Responsive text */
+  .text-responsive {
+    @apply text-sm sm:text-base lg:text-lg;
+  }
+
+  /* Responsive spacing */
+  .space-responsive {
+    @apply space-y-4 sm:space-y-6 lg:space-y-8;
+  }
+
+  /* Mobile-first responsive utilities */
+  .mobile-first {
+    @apply w-full sm:w-auto;
+  }
+
+  .mobile-stack {
+    @apply flex flex-col sm:flex-row;
+  }
+
+  .mobile-center {
+    @apply text-center sm:text-left;
+  }
+
+  .mobile-full {
+    @apply w-full sm:w-auto;
+  }
 }
 
 @layer utilities {
@@ -83,6 +130,43 @@
   .animate-glow {
     animation: glow 2s ease-in-out infinite alternate;
   }
+
+  /* Responsive utilities */
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .safe-area-left {
+    padding-left: env(safe-area-inset-left);
+  }
+
+  .safe-area-right {
+    padding-right: env(safe-area-inset-right);
+  }
+
+  /* Touch-friendly spacing */
+  .touch-friendly {
+    @apply p-3 sm:p-4;
+  }
+
+  /* Prevent text overflow */
+  .text-ellipsis {
+    @apply truncate;
+  }
+
+  /* Responsive images */
+  .img-responsive {
+    @apply w-full h-auto object-cover;
+  }
+
+  /* Responsive aspect ratios */
+  .aspect-responsive {
+    @apply aspect-video sm:aspect-square lg:aspect-video;
+  }
 }
 
 /* Custom scrollbar */
@@ -102,12 +186,12 @@
   @apply bg-gray-400 dark:bg-gray-500;
 }
 
-/* Selection */
+/* Selection styles */
 ::selection {
   @apply bg-primary-200 dark:bg-primary-800 text-primary-900 dark:text-primary-100;
 }
 
-/* Focus visible */
+/* Focus visible styles */
 .focus-visible:focus {
   @apply outline-none ring-2 ring-primary-500 ring-offset-2;
 }
@@ -117,30 +201,67 @@
   @apply animate-spin rounded-full border-2 border-gray-300 border-t-primary-600;
 }
 
-/* Gradient animations */
+/* Keyframe animations */
 @keyframes gradient {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 @keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
 }
 
 @keyframes glow {
-  from {
-    text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+  from { box-shadow: 0 0 5px theme('colors.primary.500'); }
+  to { box-shadow: 0 0 20px theme('colors.primary.500'), 0 0 30px theme('colors.primary.500'); }
+}
+
+/* Responsive breakpoint utilities */
+@media (max-width: 640px) {
+  .sm\:hidden { display: none; }
+  .sm\:block { display: block; }
+  .sm\:flex { display: flex; }
+  .sm\:grid { display: grid; }
+}
+
+@media (max-width: 768px) {
+  .md\:hidden { display: none; }
+  .md\:block { display: block; }
+  .md\:flex { display: flex; }
+  .md\:grid { display: grid; }
+}
+
+@media (max-width: 1024px) {
+  .lg\:hidden { display: none; }
+  .lg\:block { display: block; }
+  .lg\:flex { display: flex; }
+  .lg\:grid { display: grid; }
+}
+
+@media (max-width: 1280px) {
+  .xl\:hidden { display: none; }
+  .xl\:block { display: block; }
+  .xl\:flex { display: flex; }
+  .xl\:grid { display: grid; }
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 768px) {
+  /* Improve touch targets */
+  button, a, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
   }
-  to {
-    text-shadow: 0 0 30px rgba(59, 130, 246, 0.8), 0 0 40px rgba(236, 72, 153, 0.3);
+
+  /* Better text readability */
+  body {
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+
+  /* Improve form elements */
+  input, select, textarea {
+    font-size: 16px; /* Prevent zoom on iOS */
   }
 } 
