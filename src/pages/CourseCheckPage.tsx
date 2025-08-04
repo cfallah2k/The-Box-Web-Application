@@ -9,13 +9,12 @@ import {
   DocumentTextIcon,
   ExclamationTriangleIcon,
   FireIcon,
-  FlaskIcon,
+  BeakerIcon,
   MagnifyingGlassIcon,
   MicrophoneIcon,
   PlusIcon,
   QuestionMarkCircleIcon,
   ShareIcon,
-  ChartBarIcon,
   TrophyIcon,
   UserIcon,
 } from '@heroicons/react/24/outline';
@@ -34,7 +33,7 @@ const CourseCheckPage: React.FC = () => {
     { id: 'quiz', name: 'Quizzes', icon: QuestionMarkCircleIcon },
     { id: 'project', name: 'Projects', icon: CodeBracketIcon },
     { id: 'exam', name: 'Exams', icon: DocumentTextIcon },
-    { id: 'practical', name: 'Practical Tests', icon: FlaskIcon },
+    { id: 'practical', name: 'Practical Tests', icon: BeakerIcon },
     { id: 'presentation', name: 'Presentations', icon: MicrophoneIcon },
   ];
 

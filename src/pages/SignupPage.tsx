@@ -18,7 +18,7 @@ const SignupPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   
   const { signup } = useAuth();
-  const { showToast } = useToast();
+  const { addToast } = useToast();
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -32,18 +32,35 @@ const SignupPage: React.FC = () => {
     e.preventDefault();
     
     if (formData.password !== formData.confirmPassword) {
-      showToast('Passwords do not match', 'error');
+      addToast({
+        type: 'error',
+        title: 'Error',
+        message: 'Passwords do not match'
+      });
       return;
     }
 
     setIsLoading(true);
 
     try {
-      await signup(formData.email, formData.password, formData.name, formData.role);
-      showToast('Account created successfully!', 'success');
+      await signup({
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+        role: formData.role
+      });
+              addToast({
+          type: 'success',
+          title: 'Success',
+          message: 'Account created successfully!'
+        });
       navigate('/dashboard');
     } catch (error) {
-      showToast('Signup failed. Please try again.', 'error');
+              addToast({
+          type: 'error',
+          title: 'Error',
+          message: 'Signup failed. Please try again.'
+        });
     } finally {
       setIsLoading(false);
     }

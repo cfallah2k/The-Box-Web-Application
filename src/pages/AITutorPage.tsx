@@ -36,7 +36,6 @@ import {
   BoltIcon,
   GlobeAltIcon,
   LanguageIcon,
-  TranslateIcon,
   MagnifyingGlassIcon,
   CalculatorIcon,
   CameraIcon,
@@ -48,7 +47,6 @@ import {
   PresentationChartLineIcon,
   CpuChipIcon,
   CommandLineIcon,
-  TerminalIcon,
   WindowIcon,
   Cog6ToothIcon,
   CodeBracketIcon,
@@ -483,7 +481,7 @@ Would you like me to help you implement any of these advanced concepts?`,
       type: 'ai',
       content: response.content,
       timestamp: new Date(),
-      emotion: response.emotion,
+      emotion: response.emotion as 'happy' | 'confused' | 'thinking' | 'excited',
       confidence: response.confidence,
       suggestions: response.suggestions,
       metadata: {
@@ -502,8 +500,8 @@ Would you like me to help you implement any of these advanced concepts?`,
     setSessionAnalytics(prev => ({
       ...prev,
       messagesReceived: prev.messagesReceived + 1,
-      totalTokens: prev.totalTokens + aiMessage.metadata!.tokens,
-      averageResponseTime: (prev.averageResponseTime + aiMessage.metadata!.responseTime) / 2,
+      totalTokens: prev.totalTokens + (aiMessage.metadata?.tokens || 0),
+      averageResponseTime: (prev.averageResponseTime + (aiMessage.metadata?.responseTime || 0)) / 2,
       confidenceScore: (prev.confidenceScore + response.confidence) / 2
     }));
   };

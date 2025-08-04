@@ -2,8 +2,8 @@
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
-    "source.organizeImports": true
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit"
   },
   "typescript.preferences.importModuleSpecifier": "relative",
   "typescript.suggest.autoImports": true,
@@ -83,7 +83,6 @@
   },
   "editor.parameterHints.enabled": true,
   "editor.hover.enabled": true,
-  "editor.lightbulb.enabled": true,
   "editor.codeLens": true,
   "editor.folding": true,
   "editor.foldingStrategy": "indentation",

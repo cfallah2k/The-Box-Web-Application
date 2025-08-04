@@ -424,7 +424,7 @@ const CohortDetailPage: React.FC = () => {
                             {metric.value}%
                           </p>
                           <div className="flex items-center mt-1">
-                            <TrendingUpIcon className="w-4 h-4 text-green-500 mr-1" />
+                            <ChartBarIcon className="w-4 h-4 text-green-500 mr-1" />
                             <span className="text-sm font-medium text-green-600">
                               {metric.change}
                             </span>

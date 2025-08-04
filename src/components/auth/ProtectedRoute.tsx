@@ -5,10 +5,11 @@ import LoadingSpinner from '../ui/LoadingSpinner';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
+  allowedRoles?: string[];
 }
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const { isAuthenticated, isLoading } = useAuth();
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles }) => {
+  const { isAuthenticated, isLoading, user } = useAuth();
   const location = useLocation();
 
   if (isLoading) {
@@ -22,6 +23,12 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   if (!isAuthenticated) {
     // Redirect to login page with the return url
     return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  // Check role-based access if allowedRoles is provided
+  if (allowedRoles && user && !allowedRoles.includes(user.role)) {
+    // Redirect to unauthorized page or dashboard
+    return <Navigate to="/unauthorized" replace />;
   }
 
   return <>{children}</>;

@@ -1,74 +1,20 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { 
-  BellIcon,
+import {
   AcademicCapIcon,
-  UserGroupIcon,
+  BellIcon,
   CalendarIcon,
-  ClockIcon,
   ChartBarIcon,
-  TrophyIcon,
-  FireIcon,
-  ChartBarIcon,
-  PlusIcon,
-  EyeIcon,
-  HeartIcon,
-  ShareIcon,
-  BookmarkIcon,
-  FlagIcon,
-  MapPinIcon,
-  UsersIcon,
-  FilterIcon,
-  LightBulbIcon,
-  QuestionMarkCircleIcon,
-  DocumentTextIcon,
-  VideoCameraIcon,
-  MicrophoneIcon,
-  CameraIcon,
-  CodeBracketIcon,
-  DatabaseIcon,
-  ServerIcon,
-  CloudIcon,
-  ChipIcon,
-  RocketLaunchIcon,
-  FlaskIcon,
-  TestTubeIcon,
-  AtomIcon,
-  CpuChipIcon,
-  NetworkIcon,
-  CircuitBoardIcon,
-  SatelliteIcon,
-  TelescopeIcon,
-  MicroscopeIcon,
-  DnaIcon,
-  MagnifyingGlassIcon,
-  UserIcon,
   ChatBubbleLeftRightIcon,
-  StarIcon,
-  CheckCircleIcon,
-  XCircleIcon,
-  ExclamationTriangleIcon,
-  InformationCircleIcon,
-  PencilIcon,
-  TrashIcon,
+  ClockIcon,
   CogIcon,
-  ClipboardDocumentIcon,
-  PresentationChartLineIcon,
-  UserPlusIcon,
-  EnvelopeIcon,
-  PhoneIcon,
-  GlobeAltIcon,
-  BuildingOfficeIcon,
-  ShieldCheckIcon,
-  KeyIcon,
-  LockClosedIcon,
-  EyeSlashIcon,
-  DevicePhoneMobileIcon,
-  ComputerDesktopIcon,
-  SwatchIcon,
-  LanguageIcon,
-  CurrencyDollarIcon
+  EyeIcon,
+  MagnifyingGlassIcon,
+  StarIcon,
+  TrashIcon,
+  TrophyIcon,
+  UserGroupIcon,
 } from '@heroicons/react/24/outline';
+import { motion } from 'framer-motion';
+import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 
 const NotificationsPage: React.FC = () => {
@@ -83,14 +29,15 @@ const NotificationsPage: React.FC = () => {
     { id: 'message', name: 'Messages', icon: ChatBubbleLeftRightIcon },
     { id: 'achievement', name: 'Achievements', icon: TrophyIcon },
     { id: 'reminder', name: 'Reminders', icon: ClockIcon },
-    { id: 'system', name: 'System', icon: CogIcon }
+    { id: 'system', name: 'System', icon: CogIcon },
   ];
 
   const notifications = [
     {
       id: 1,
       title: 'New Course Available',
-      message: 'Advanced React Development course is now available for enrollment.',
+      message:
+        'Advanced React Development course is now available for enrollment.',
       type: 'course',
       status: 'unread',
       timestamp: '2 hours ago',
@@ -98,12 +45,13 @@ const NotificationsPage: React.FC = () => {
       icon: AcademicCapIcon,
       color: 'bg-blue-500',
       action: 'View Course',
-      courseId: 1
+      courseId: 1,
     },
     {
       id: 2,
       title: 'Message from Instructor',
-      message: 'Dr. Sarah Johnson sent you a message about your recent assignment.',
+      message:
+        'Dr. Sarah Johnson sent you a message about your recent assignment.',
       type: 'message',
       status: 'unread',
       timestamp: '4 hours ago',
@@ -111,12 +59,13 @@ const NotificationsPage: React.FC = () => {
       icon: ChatBubbleLeftRightIcon,
       color: 'bg-green-500',
       action: 'View Message',
-      messageId: 1
+      messageId: 1,
     },
     {
       id: 3,
       title: 'Achievement Unlocked',
-      message: 'Congratulations! You\'ve earned the "First Course Completed" badge.',
+      message:
+        'Congratulations! You\'ve earned the "First Course Completed" badge.',
       type: 'achievement',
       status: 'read',
       timestamp: '1 day ago',
@@ -124,12 +73,13 @@ const NotificationsPage: React.FC = () => {
       icon: TrophyIcon,
       color: 'bg-yellow-500',
       action: 'View Achievement',
-      achievementId: 1
+      achievementId: 1,
     },
     {
       id: 4,
       title: 'Learning Reminder',
-      message: 'Don\'t forget to continue your React course. You\'re on a 7-day streak!',
+      message:
+        "Don't forget to continue your React course. You're on a 7-day streak!",
       type: 'reminder',
       status: 'read',
       timestamp: '2 days ago',
@@ -137,7 +87,7 @@ const NotificationsPage: React.FC = () => {
       icon: ClockIcon,
       color: 'bg-purple-500',
       action: 'Continue Learning',
-      courseId: 1
+      courseId: 1,
     },
     {
       id: 5,
@@ -150,12 +100,13 @@ const NotificationsPage: React.FC = () => {
       icon: CogIcon,
       color: 'bg-gray-500',
       action: 'Learn More',
-      maintenanceId: 1
+      maintenanceId: 1,
     },
     {
       id: 6,
       title: 'New Cohort Starting',
-      message: 'Machine Learning Fundamentals cohort starts next week. Join now!',
+      message:
+        'Machine Learning Fundamentals cohort starts next week. Join now!',
       type: 'course',
       status: 'unread',
       timestamp: '5 hours ago',
@@ -163,8 +114,8 @@ const NotificationsPage: React.FC = () => {
       icon: UserGroupIcon,
       color: 'bg-orange-500',
       action: 'Join Cohort',
-      cohortId: 2
-    }
+      cohortId: 2,
+    },
   ];
 
   const notificationStats = [
@@ -175,7 +126,7 @@ const NotificationsPage: React.FC = () => {
       change: '+1',
       changeType: 'increase',
       icon: BellIcon,
-      color: 'bg-red-500'
+      color: 'bg-red-500',
     },
     {
       id: 2,
@@ -184,7 +135,7 @@ const NotificationsPage: React.FC = () => {
       change: '+2',
       changeType: 'increase',
       icon: CalendarIcon,
-      color: 'bg-blue-500'
+      color: 'bg-blue-500',
     },
     {
       id: 3,
@@ -193,7 +144,7 @@ const NotificationsPage: React.FC = () => {
       change: '+3',
       changeType: 'increase',
       icon: ChartBarIcon,
-      color: 'bg-green-500'
+      color: 'bg-green-500',
     },
     {
       id: 4,
@@ -202,24 +153,27 @@ const NotificationsPage: React.FC = () => {
       change: '+8',
       changeType: 'increase',
       icon: ChartBarIcon,
-      color: 'bg-purple-500'
-    }
+      color: 'bg-purple-500',
+    },
   ];
 
   const tabs = [
     { id: 'all', name: 'All', icon: BellIcon },
     { id: 'unread', name: 'Unread', icon: EyeIcon },
     { id: 'important', name: 'Important', icon: StarIcon },
-    { id: 'settings', name: 'Settings', icon: CogIcon }
+    { id: 'settings', name: 'Settings', icon: CogIcon },
   ];
 
   const filteredNotifications = notifications.filter(notification => {
-    const matchesSearch = notification.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         notification.message.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'all' || notification.type === selectedCategory;
-    const matchesTab = activeTab === 'all' || 
-                      (activeTab === 'unread' && notification.status === 'unread') ||
-                      (activeTab === 'important' && notification.priority === 'high');
+    const matchesSearch =
+      notification.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      notification.message.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory =
+      selectedCategory === 'all' || notification.type === selectedCategory;
+    const matchesTab =
+      activeTab === 'all' ||
+      (activeTab === 'unread' && notification.status === 'unread') ||
+      (activeTab === 'important' && notification.priority === 'high');
     return matchesSearch && matchesCategory && matchesTab;
   });
 
@@ -245,7 +199,9 @@ const NotificationsPage: React.FC = () => {
         >
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Notifications</h1>
+              <h1 className="text-3xl font-bold text-gray-900">
+                Notifications
+              </h1>
               <p className="text-gray-600 mt-2">
                 Stay updated with your learning progress and important updates.
               </p>
@@ -282,10 +238,14 @@ const NotificationsPage: React.FC = () => {
                   <stat.icon className="w-6 h-6 text-white" />
                 </div>
                 <div className="ml-4 flex-1">
-                  <p className="text-sm font-medium text-gray-600">{stat.metric}</p>
-                  <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+                  <p className="text-sm font-medium text-gray-600">
+                    {stat.metric}
+                  </p>
+                  <p className="text-2xl font-bold text-gray-900">
+                    {stat.value}
+                  </p>
                   <div className="flex items-center mt-1">
-                    <TrendingUpIcon className="w-4 h-4 text-green-500 mr-1" />
+                    <ChartBarIcon className="w-4 h-4 text-green-500 mr-1" />
                     <span className="text-sm font-medium text-green-600">
                       {stat.change}
                     </span>
@@ -311,7 +271,7 @@ const NotificationsPage: React.FC = () => {
                 type="text"
                 placeholder="Search notifications..."
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={e => setSearchTerm(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
@@ -320,10 +280,10 @@ const NotificationsPage: React.FC = () => {
             <div>
               <select
                 value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
+                onChange={e => setSelectedCategory(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               >
-                {categories.map((category) => (
+                {categories.map(category => (
                   <option key={category.id} value={category.id}>
                     {category.name}
                   </option>
@@ -347,7 +307,7 @@ const NotificationsPage: React.FC = () => {
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
           <div className="border-b border-gray-200">
             <nav className="flex space-x-8 px-6">
-              {tabs.map((tab) => (
+              {tabs.map(tab => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
@@ -380,7 +340,7 @@ const NotificationsPage: React.FC = () => {
                     <div className={`p-3 rounded-lg ${notification.color}`}>
                       <notification.icon className="w-6 h-6 text-white" />
                     </div>
-                    
+
                     <div className="flex-1">
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
@@ -391,28 +351,38 @@ const NotificationsPage: React.FC = () => {
                             {notification.status === 'unread' && (
                               <span className="w-2 h-2 bg-blue-600 rounded-full"></span>
                             )}
-                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                              notification.priority === 'high' ? 'bg-red-100 text-red-800' :
-                              notification.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' :
-                              'bg-gray-100 text-gray-800'
-                            }`}>
+                            <span
+                              className={`px-2 py-1 rounded-full text-xs font-medium ${
+                                notification.priority === 'high'
+                                  ? 'bg-red-100 text-red-800'
+                                  : notification.priority === 'medium'
+                                  ? 'bg-yellow-100 text-yellow-800'
+                                  : 'bg-gray-100 text-gray-800'
+                              }`}
+                            >
                               {notification.priority}
                             </span>
-                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                              notification.type === 'course' ? 'bg-blue-100 text-blue-800' :
-                              notification.type === 'message' ? 'bg-green-100 text-green-800' :
-                              notification.type === 'achievement' ? 'bg-yellow-100 text-yellow-800' :
-                              notification.type === 'reminder' ? 'bg-purple-100 text-purple-800' :
-                              'bg-gray-100 text-gray-800'
-                            }`}>
+                            <span
+                              className={`px-2 py-1 rounded-full text-xs font-medium ${
+                                notification.type === 'course'
+                                  ? 'bg-blue-100 text-blue-800'
+                                  : notification.type === 'message'
+                                  ? 'bg-green-100 text-green-800'
+                                  : notification.type === 'achievement'
+                                  ? 'bg-yellow-100 text-yellow-800'
+                                  : notification.type === 'reminder'
+                                  ? 'bg-purple-100 text-purple-800'
+                                  : 'bg-gray-100 text-gray-800'
+                              }`}
+                            >
                               {notification.type}
                             </span>
                           </div>
-                          
+
                           <p className="text-gray-600 mb-3">
                             {notification.message}
                           </p>
-                          
+
                           <div className="flex items-center justify-between">
                             <div className="flex items-center space-x-4 text-sm text-gray-500">
                               <span>{notification.timestamp}</span>
@@ -420,7 +390,7 @@ const NotificationsPage: React.FC = () => {
                                 {notification.action}
                               </button>
                             </div>
-                            
+
                             <div className="flex items-center space-x-2">
                               {notification.status === 'unread' && (
                                 <button
@@ -432,7 +402,9 @@ const NotificationsPage: React.FC = () => {
                                 </button>
                               )}
                               <button
-                                onClick={() => deleteNotification(notification.id)}
+                                onClick={() =>
+                                  deleteNotification(notification.id)
+                                }
                                 className="text-gray-400 hover:text-red-600 transition-colors"
                                 title="Delete notification"
                               >
@@ -446,7 +418,7 @@ const NotificationsPage: React.FC = () => {
                   </div>
                 </motion.div>
               ))}
-              
+
               {filteredNotifications.length === 0 && (
                 <motion.div
                   initial={{ opacity: 0 }}
@@ -458,7 +430,9 @@ const NotificationsPage: React.FC = () => {
                     No notifications found
                   </h3>
                   <p className="text-gray-600">
-                    {activeTab === 'unread' ? 'You\'re all caught up!' : 'Try adjusting your filters.'}
+                    {activeTab === 'unread'
+                      ? "You're all caught up!"
+                      : 'Try adjusting your filters.'}
                   </p>
                 </motion.div>
               )}
@@ -470,4 +444,4 @@ const NotificationsPage: React.FC = () => {
   );
 };
 
-export default NotificationsPage; 
+export default NotificationsPage;

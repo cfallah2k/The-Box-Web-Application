@@ -1,76 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { 
-  MagnifyingGlassIcon,
-  AcademicCapIcon,
-  UserGroupIcon,
-  CalendarIcon,
-  ClockIcon,
-  ChartBarIcon,
-  TrophyIcon,
-  FireIcon,
-  ChartBarIcon,
-  PlusIcon,
-  EyeIcon,
-  HeartIcon,
-  ShareIcon,
-  BookmarkIcon,
-  FlagIcon,
-  MapPinIcon,
-  UsersIcon,
-  BellIcon,
-  FilterIcon,
-  LightBulbIcon,
-  QuestionMarkCircleIcon,
-  DocumentTextIcon,
-  VideoCameraIcon,
-  MicrophoneIcon,
-  CameraIcon,
-  CodeBracketIcon,
-  DatabaseIcon,
-  ServerIcon,
-  CloudIcon,
-  ChipIcon,
-  RocketLaunchIcon,
-  FlaskIcon,
-  TestTubeIcon,
-  AtomIcon,
-  CpuChipIcon,
-  NetworkIcon,
-  CircuitBoardIcon,
-  SatelliteIcon,
-  TelescopeIcon,
-  MicroscopeIcon,
-  DnaIcon,
-  UserIcon,
-  ChatBubbleLeftRightIcon,
-  StarIcon,
-  CheckCircleIcon,
-  XCircleIcon,
-  ExclamationTriangleIcon,
-  InformationCircleIcon,
-  PencilIcon,
-  TrashIcon,
-  CogIcon,
-  ClipboardDocumentIcon,
-  PresentationChartLineIcon,
-  UserPlusIcon,
-  EnvelopeIcon,
-  PhoneIcon,
-  GlobeAltIcon,
-  BuildingOfficeIcon,
-  ShieldCheckIcon,
-  KeyIcon,
-  LockClosedIcon,
-  EyeSlashIcon,
-  DevicePhoneMobileIcon,
-  ComputerDesktopIcon,
-  SwatchIcon,
-  LanguageIcon,
-  CurrencyDollarIcon
+import {
+    AcademicCapIcon,
+    BookmarkIcon,
+    ClockIcon,
+    CodeBracketIcon,
+    DocumentTextIcon,
+    MagnifyingGlassIcon,
+    StarIcon,
+    UserGroupIcon,
+    UserIcon,
+    UsersIcon
 } from '@heroicons/react/24/outline';
-import { useAuth } from '../contexts/AuthContext';
+import { motion } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 const SearchPage: React.FC = () => {
   const { user } = useAuth();
@@ -289,9 +232,9 @@ const SearchPage: React.FC = () => {
                 className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="all">Any Duration</option>
-                <option value="short">Short (< 4 weeks)</option>
+                <option value="short">Short (&lt; 4 weeks)</option>
                 <option value="medium">Medium (4-8 weeks)</option>
-                <option value="long">Long (> 8 weeks)</option>
+                <option value="long">Long (&gt; 8 weeks)</option>
               </select>
               
               <select

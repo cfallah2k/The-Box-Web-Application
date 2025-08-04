@@ -12,7 +12,7 @@ const LoginPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   
   const { login } = useAuth();
-  const { showToast } = useToast();
+  const { addToast } = useToast();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -21,10 +21,18 @@ const LoginPage: React.FC = () => {
 
     try {
       await login(email, password);
-      showToast('Successfully logged in!', 'success');
+      addToast({
+        type: 'success',
+        title: 'Success',
+        message: 'Successfully logged in!'
+      });
       navigate('/dashboard');
     } catch (error) {
-      showToast('Login failed. Please check your credentials.', 'error');
+      addToast({
+        type: 'error',
+        title: 'Error',
+        message: 'Login failed. Please check your credentials.'
+      });
     } finally {
       setIsLoading(false);
     }

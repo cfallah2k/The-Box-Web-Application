@@ -5,7 +5,7 @@ import {
   ExclamationTriangleIcon,
   HomeIcon,
   QuestionMarkCircleIcon,
-  RefreshIcon,
+  ArrowPathIcon,
 } from '@heroicons/react/24/outline';
 import { motion } from 'framer-motion';
 import React from 'react';
@@ -92,7 +92,7 @@ const ErrorPage: React.FC = () => {
               onClick={() => window.location.reload()}
               className="inline-flex items-center justify-center w-full border border-gray-300 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-50 transition-colors"
             >
-              <RefreshIcon className="w-5 h-5 mr-2" />
+                              <ArrowPathIcon className="w-5 h-5 mr-2" />
               Refresh Page
             </button>
           </div>

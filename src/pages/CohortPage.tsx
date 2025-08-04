@@ -10,7 +10,6 @@ import {
   LightBulbIcon,
   MagnifyingGlassIcon,
   PlusIcon,
-  ChartBarIcon,
   UserGroupIcon,
   UserIcon,
   UsersIcon,

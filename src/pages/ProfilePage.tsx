@@ -143,7 +143,7 @@ const ProfilePage: React.FC = () => {
                   user?.role === 'admin' ? 'bg-red-100 text-red-800' :
                   'bg-purple-100 text-purple-800'
                 }`}>
-                  {user?.role?.charAt(0).toUpperCase() + user?.role?.slice(1)}
+                  {user?.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : 'User'}
                 </span>
               </div>
 

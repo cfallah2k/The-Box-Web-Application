@@ -18,6 +18,7 @@ import {
   UserGroupIcon, // For Cohorts
   ChartBarIcon, // For Analytics
   ShoppingBagIcon, // For Marketplace
+  BeakerIcon, // For Research Lab
   PhotoIcon, // For Gallery
   DocumentTextIcon // For Blog
 } from '@heroicons/react/24/outline';

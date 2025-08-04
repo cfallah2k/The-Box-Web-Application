@@ -1,20 +1,19 @@
 import {
-  AtomIcon,
   BeakerIcon,
   BellIcon,
   BookmarkIcon,
-  CpuChipIcon,
   CalendarIcon,
   ChartBarIcon,
   CloudIcon,
   CogIcon,
-  DatabaseIcon,
-  DnaIcon,
+  CpuChipIcon,
   DocumentTextIcon,
   GlobeAltIcon,
+  MagnifyingGlassIcon,
   PlusIcon,
   ServerIcon,
   UserGroupIcon,
+  UserIcon,
   UsersIcon,
 } from '@heroicons/react/24/outline';
 import { motion } from 'framer-motion';
@@ -31,8 +30,8 @@ const ResearchLabPage: React.FC = () => {
     { id: 'all', name: 'All Research', icon: BeakerIcon },
     { id: 'ai-ml', name: 'AI & Machine Learning', icon: CpuChipIcon },
     { id: 'data-science', name: 'Data Science', icon: ChartBarIcon },
-    { id: 'biotech', name: 'Biotechnology', icon: DnaIcon },
-    { id: 'quantum', name: 'Quantum Computing', icon: AtomIcon },
+    { id: 'biotech', name: 'Biotechnology', icon: BeakerIcon },
+    { id: 'quantum', name: 'Quantum Computing', icon: BeakerIcon },
     { id: 'robotics', name: 'Robotics', icon: CogIcon },
   ];
 
@@ -578,7 +577,7 @@ const ResearchLabPage: React.FC = () => {
                     className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow"
                   >
                     <div className="flex items-center space-x-3 mb-4">
-                      <DatabaseIcon className="w-8 h-8 text-blue-600" />
+                      <ServerIcon className="w-8 h-8 text-blue-600" />
                       <div>
                         <h3 className="text-lg font-semibold text-gray-900">
                           Research Database

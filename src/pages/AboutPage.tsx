@@ -64,7 +64,7 @@ const AboutPage: React.FC = () => {
     {
       id: 1,
       title: 'Innovation',
-      description: 'We constantly push the boundaries of what's possible in education technology.',
+      description: 'We constantly push the boundaries of what\'s possible in education technology.',
       icon: LightBulbIcon,
       color: 'bg-yellow-500'
     },

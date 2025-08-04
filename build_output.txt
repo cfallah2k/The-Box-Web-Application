@@ -1,0 +1,17 @@
+
+> the-box-pwa@1.0.0 build
+> react-scripts build
+
+Creating an optimized production build...
+Failed to compile.
+
+TS2305: Module '"@heroicons/react/24/outline"' has no exported member 'BrainIcon'.
+  [0m [90m  9 |[39m   [33mPauseIcon[39m[33m,[39m
+   [90m 10 |[39m   [33mEyeIcon[39m[33m,[39m
+  [31m[1m>[22m[39m[90m 11 |[39m   [33mBrainIcon[39m[33m,[39m
+   [90m    |[39m   [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+   [90m 12 |[39m   [33mSparklesIcon[39m[33m,[39m
+   [90m 13 |[39m   [33mRocketLaunchIcon[39m[33m,[39m
+   [90m 14 |[39m   [33mBeakerIcon[39m[33m,[39m[0m
+
+
