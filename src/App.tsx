@@ -52,10 +52,12 @@ import ContactPage from './pages/ContactPage';
 import OfflineStatus from './components/ui/OfflineStatus';
 import PWAInstallPrompt from './components/ui/PWAInstallPrompt';
 import PWAUpdateNotification from './components/ui/PWAUpdateNotification';
+import NotificationSettings from './components/ui/NotificationSettings';
 import ToastContainer from './components/ui/ToastContainer';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
+  const [showNotificationSettings, setShowNotificationSettings] = useState(false);
 
   useEffect(() => {
     // Simulate initial app loading
@@ -261,6 +263,10 @@ function App() {
                 <ToastContainer />
                 <PWAInstallPrompt />
                 <PWAUpdateNotification />
+                <NotificationSettings 
+                  isOpen={showNotificationSettings} 
+                  onClose={() => setShowNotificationSettings(false)} 
+                />
               </div>
             </ToastProvider>
           </LoadingProvider>

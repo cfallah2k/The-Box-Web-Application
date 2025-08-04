@@ -1,15 +1,17 @@
 import {
   AcademicCapIcon,
-  ArrowDownTrayIcon,
+  ArrowTrendingUpIcon,
   BeakerIcon,
   ChartBarIcon,
   ChatBubbleLeftRightIcon,
   CheckCircleIcon,
+  ClockIcon,
   CpuChipIcon,
   DevicePhoneMobileIcon,
   GlobeAltIcon,
   GlobeAltIcon as GlobeIcon,
-  MapPinIcon,
+  HeartIcon,
+  MagnifyingGlassIcon,
   PlayIcon,
   RocketLaunchIcon,
   SparklesIcon,
@@ -19,24 +21,31 @@ import {
   UsersIcon,
   WifiIcon,
   XMarkIcon,
-  MagnifyingGlassIcon,
-  FireIcon,
-  ClockIcon,
-  HeartIcon,
-  BookmarkIcon,
-  ShareIcon,
-  EyeIcon,
-  ArrowTrendingUpIcon,
-  BoltIcon,
-  LightBulbIcon,
-  PuzzlePieceIcon,
 } from '@heroicons/react/24/outline';
-import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
-import React, { useEffect, useState, useRef } from 'react';
+import {
+  AnimatePresence,
+  motion,
+  useScroll,
+  useTransform,
+} from 'framer-motion';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import LiveAITutorDemo from '../components/ai/LiveAITutorDemo';
+import InteractiveMap from '../components/ui/InteractiveMap';
+import LiveUserActivity from '../components/ui/LiveUserActivity';
+import GamificationSystem from '../components/gamification/GamificationSystem';
+import AdvancedAnalytics from '../components/analytics/AdvancedAnalytics';
+import StudyGroups from '../components/social/StudyGroups';
+import CourseBuilder from '../components/content/CourseBuilder';
+import PersonalizedLearningPaths from '../components/ai/PersonalizedLearningPaths';
+import SmartContentCuration from '../components/ai/SmartContentCuration';
+import AdaptiveAssessments from '../components/ai/AdaptiveAssessments';
+import VoiceCommands from '../components/ai/VoiceCommands';
+import TeamManagement from '../components/enterprise/TeamManagement';
+import CustomBranding from '../components/enterprise/CustomBranding';
+import PerformanceMonitoring from '../components/performance/PerformanceMonitoring';
 import { useAuth } from '../contexts/AuthContext';
 import { usePWA } from '../hooks/usePWA';
-import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 const HomePage: React.FC = () => {
   const { isAuthenticated, user } = useAuth();
@@ -236,7 +245,8 @@ const HomePage: React.FC = () => {
       duration: '8 weeks',
       level: 'Beginner',
       category: 'Programming',
-      image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400',
+      image:
+        'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400',
       progress: 0,
       isEnrolled: false,
       price: '$199',
@@ -299,7 +309,9 @@ const HomePage: React.FC = () => {
                 <DevicePhoneMobileIcon className="h-6 w-6 mr-3" />
                 <div>
                   <h3 className="font-semibold">Install The Box</h3>
-                  <p className="text-sm opacity-90">Get the full experience on your device</p>
+                  <p className="text-sm opacity-90">
+                    Get the full experience on your device
+                  </p>
                 </div>
               </div>
               <div className="flex items-center space-x-2">
@@ -323,8 +335,11 @@ const HomePage: React.FC = () => {
 
       {/* Hero Section with Parallax */}
       <section className="relative overflow-hidden">
-        <motion.div style={{ y: y1 }} className="absolute inset-0 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 opacity-10"></motion.div>
-        
+        <motion.div
+          style={{ y: y1 }}
+          className="absolute inset-0 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 opacity-10"
+        ></motion.div>
+
         <div className="container-responsive pt-20 pb-16">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Hero Content */}
@@ -344,7 +359,7 @@ const HomePage: React.FC = () => {
                   <SparklesIcon className="w-4 h-4 mr-2" />
                   AI-Powered Learning Platform
                 </motion.div>
-                
+
                 <motion.h1
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -354,14 +369,15 @@ const HomePage: React.FC = () => {
                   Transform Your
                   <span className="gradient-text block">Learning Journey</span>
                 </motion.h1>
-                
+
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 }}
                   className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl"
                 >
-                  Experience personalized education with AI tutors, interactive features, and a global community of learners.
+                  Experience personalized education with AI tutors, interactive
+                  features, and a global community of learners.
                 </motion.p>
               </div>
 
@@ -373,10 +389,26 @@ const HomePage: React.FC = () => {
                 className="grid grid-cols-2 md:grid-cols-4 gap-4"
               >
                 {[
-                  { label: 'Active Users', value: liveStats.activeUsers.toLocaleString(), icon: UsersIcon },
-                  { label: 'Courses Completed', value: liveStats.coursesCompleted.toLocaleString(), icon: TrophyIcon },
-                  { label: 'AI Conversations', value: liveStats.aiConversations.toLocaleString(), icon: ChatBubbleLeftRightIcon },
-                  { label: 'Countries', value: liveStats.countriesReached.toString(), icon: GlobeAltIcon },
+                  {
+                    label: 'Active Users',
+                    value: liveStats.activeUsers.toLocaleString(),
+                    icon: UsersIcon,
+                  },
+                  {
+                    label: 'Courses Completed',
+                    value: liveStats.coursesCompleted.toLocaleString(),
+                    icon: TrophyIcon,
+                  },
+                  {
+                    label: 'AI Conversations',
+                    value: liveStats.aiConversations.toLocaleString(),
+                    icon: ChatBubbleLeftRightIcon,
+                  },
+                  {
+                    label: 'Countries',
+                    value: liveStats.countriesReached.toString(),
+                    icon: GlobeAltIcon,
+                  },
                 ].map((stat, index) => (
                   <motion.div
                     key={stat.label}
@@ -431,55 +463,7 @@ const HomePage: React.FC = () => {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="relative"
             >
-              <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-6 border border-gray-200 dark:border-gray-700">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
-                      <CpuChipIcon className="w-6 h-6 text-white" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900 dark:text-white">AI Tutor</h3>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">Online now</p>
-                    </div>
-                  </div>
-                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                </div>
-                
-                <div className="space-y-3">
-                  <div className="flex items-start space-x-3">
-                    <div className="w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center">
-                      <span className="text-sm font-medium">U</span>
-                    </div>
-                    <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-3 max-w-xs">
-                      <p className="text-sm text-gray-700 dark:text-gray-300">
-                        Can you help me understand machine learning?
-                      </p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start space-x-3 justify-end">
-                    <div className="bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg p-3 max-w-xs">
-                      <p className="text-sm text-white">
-                        Absolutely! Machine learning is a subset of AI that enables computers to learn from data. Let me explain the key concepts...
-                      </p>
-                    </div>
-                    <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
-                      <CpuChipIcon className="w-5 h-5 text-white" />
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="mt-4 flex items-center space-x-2">
-                  <input
-                    type="text"
-                    placeholder="Ask your AI tutor..."
-                    className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
-                  />
-                  <button className="p-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg hover:shadow-lg transition-all duration-200">
-                    <ArrowDownTrayIcon className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
+              <LiveAITutorDemo />
             </motion.div>
           </div>
         </div>
@@ -498,7 +482,8 @@ const HomePage: React.FC = () => {
               Find Your Perfect Course
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Search through thousands of courses, filter by category, level, and instructor
+              Search through thousands of courses, filter by category, level,
+              and instructor
             </p>
           </motion.div>
 
@@ -517,7 +502,7 @@ const HomePage: React.FC = () => {
                 type="text"
                 placeholder="Search courses, topics, instructors..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={e => setSearchQuery(e.target.value)}
                 onFocus={() => setShowSearch(true)}
                 className="w-full pl-12 pr-4 py-4 text-lg border border-gray-300 dark:border-gray-600 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-white shadow-lg"
               />
@@ -528,7 +513,15 @@ const HomePage: React.FC = () => {
 
             {/* Search Filters */}
             <div className="mt-6 flex flex-wrap gap-3 justify-center">
-              {['All', 'Programming', 'AI & ML', 'Data Science', 'Business', 'Design', 'Marketing'].map((filter) => (
+              {[
+                'All',
+                'Programming',
+                'AI & ML',
+                'Data Science',
+                'Business',
+                'Design',
+                'Marketing',
+              ].map(filter => (
                 <button
                   key={filter}
                   className="px-4 py-2 rounded-full border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200"
@@ -591,9 +584,13 @@ const HomePage: React.FC = () => {
                       <div className="flex items-center justify-between text-white">
                         <div className="flex items-center space-x-1">
                           <StarIcon className="w-4 h-4 text-yellow-400" />
-                          <span className="text-sm font-medium">{course.rating}</span>
+                          <span className="text-sm font-medium">
+                            {course.rating}
+                          </span>
                         </div>
-                        <span className="text-sm opacity-90">{course.students.toLocaleString()} students</span>
+                        <span className="text-sm opacity-90">
+                          {course.students.toLocaleString()} students
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -601,24 +598,28 @@ const HomePage: React.FC = () => {
                   {/* Course Content */}
                   <div className="p-6">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm text-blue-600 font-medium">{course.category}</span>
+                      <span className="text-sm text-blue-600 font-medium">
+                        {course.category}
+                      </span>
                       <div className="flex items-center space-x-2">
-                        <span className="text-sm text-gray-500 dark:text-gray-400">{course.duration}</span>
+                        <span className="text-sm text-gray-500 dark:text-gray-400">
+                          {course.duration}
+                        </span>
                         <ClockIcon className="w-4 h-4 text-gray-400" />
                       </div>
                     </div>
-                    
+
                     <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 transition-colors">
                       {course.title}
                     </h3>
-                    
+
                     <p className="text-gray-600 dark:text-gray-300 mb-4">
                       by {course.instructor}
                     </p>
 
                     {/* Course Features */}
                     <div className="flex flex-wrap gap-2 mb-4">
-                      {course.features.map((feature) => (
+                      {course.features.map(feature => (
                         <span
                           key={feature}
                           className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-xs text-gray-600 dark:text-gray-300 rounded-full"
@@ -632,8 +633,12 @@ const HomePage: React.FC = () => {
                     {course.isEnrolled && (
                       <div className="mb-4">
                         <div className="flex items-center justify-between text-sm mb-1">
-                          <span className="text-gray-600 dark:text-gray-400">Progress</span>
-                          <span className="text-gray-900 dark:text-white font-medium">{course.progress}%</span>
+                          <span className="text-gray-600 dark:text-gray-400">
+                            Progress
+                          </span>
+                          <span className="text-gray-900 dark:text-white font-medium">
+                            {course.progress}%
+                          </span>
                         </div>
                         <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                           <div
@@ -681,7 +686,8 @@ const HomePage: React.FC = () => {
               Trusted by Leading Institutions
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Join thousands of learners from top universities and companies worldwide
+              Join thousands of learners from top universities and companies
+              worldwide
             </p>
           </motion.div>
 
@@ -745,18 +751,20 @@ const HomePage: React.FC = () => {
                 className="group"
               >
                 <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 dark:border-gray-700">
-                  <div className={`w-16 h-16 ${feature.color} rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                  <div
+                    className={`w-16 h-16 ${feature.color} rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}
+                  >
                     <feature.icon className="w-8 h-8 text-white" />
                   </div>
-                  
+
                   <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
                     {feature.title}
                   </h3>
-                  
+
                   <p className="text-gray-600 dark:text-gray-300 mb-4">
                     {feature.description}
                   </p>
-                  
+
                   <div className="flex items-center space-x-2">
                     <ArrowTrendingUpIcon className="w-5 h-5 text-green-500" />
                     <span className="text-sm font-medium text-green-600 dark:text-green-400">
@@ -817,31 +825,282 @@ const HomePage: React.FC = () => {
                       </motion.div>
                     ))}
                   </div>
-                  
+
                   <div className="flex items-center space-x-4">
                     <div className="flex items-center space-x-2">
                       <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                      <span className="text-sm text-gray-600 dark:text-gray-400">Active Learners</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">
+                        Active Learners
+                      </span>
                     </div>
                     <div className="flex items-center space-x-2">
                       <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                      <span className="text-sm text-gray-600 dark:text-gray-400">New This Week</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">
+                        New This Week
+                      </span>
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="relative">
-                  <div className="w-full h-64 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-gray-700 dark:to-gray-800 rounded-xl flex items-center justify-center">
-                    <div className="text-center">
-                      <GlobeAltIcon className="w-16 h-16 text-blue-500 mx-auto mb-4" />
-                      <p className="text-gray-600 dark:text-gray-400">
-                        Interactive Map Coming Soon
-                      </p>
-                    </div>
-                  </div>
+                  <InteractiveMap />
                 </div>
               </div>
             </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Live User Activity Feed */}
+      <section className="py-16 bg-gray-50 dark:bg-gray-900">
+        <div className="container-responsive">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center space-y-4 mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
+              Live Community Activity
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              See what's happening in real-time across our global learning community
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="max-w-2xl mx-auto"
+          >
+            <LiveUserActivity />
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Gamification System */}
+      <section className="py-16 bg-white dark:bg-gray-900">
+        <div className="container-responsive">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center space-y-4 mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
+              Gamified Learning Experience
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              Earn achievements, build streaks, and level up your learning journey
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="max-w-4xl mx-auto"
+          >
+            <GamificationSystem />
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Advanced Analytics Dashboard */}
+      <section className="py-16 bg-gray-50 dark:bg-gray-900">
+        <div className="container-responsive">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center space-y-4 mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
+              Advanced Analytics & Insights
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              Track your learning progress with detailed analytics and performance insights
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="max-w-6xl mx-auto"
+          >
+            <AdvancedAnalytics />
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Social & Community Features */}
+      <section className="py-16 bg-white dark:bg-gray-900">
+        <div className="container-responsive">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center space-y-4 mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
+              Connect & Collaborate
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              Join study groups, find peer tutors, and participate in discussion forums
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="max-w-6xl mx-auto"
+          >
+            <StudyGroups />
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Content Creation Tools */}
+      <section className="py-16 bg-gray-50 dark:bg-gray-900">
+        <div className="container-responsive">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center space-y-4 mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
+              Create & Share Knowledge
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              Build courses, create interactive quizzes, and share your expertise with the community
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="max-w-6xl mx-auto"
+          >
+            <CourseBuilder />
+          </motion.div>
+        </div>
+      </section>
+
+      {/* AI-Powered Features */}
+      <section className="py-16 bg-white dark:bg-gray-900">
+        <div className="container-responsive">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center space-y-4 mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
+              AI-Powered Learning Features
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              Experience the future of learning with advanced AI capabilities
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              <PersonalizedLearningPaths />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <SmartContentCuration />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              <AdaptiveAssessments />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              <VoiceCommands />
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Enterprise Features */}
+      <section className="py-16 bg-gray-50 dark:bg-gray-900">
+        <div className="container-responsive">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center space-y-4 mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
+              Enterprise Solutions
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              Powerful tools for organizations and teams
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              <TeamManagement />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <CustomBranding />
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Performance & Monitoring */}
+      <section className="py-16 bg-white dark:bg-gray-900">
+        <div className="container-responsive">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center space-y-4 mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
+              Performance & Monitoring
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              Real-time insights and system monitoring
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="max-w-6xl mx-auto"
+          >
+            <PerformanceMonitoring />
           </motion.div>
         </div>
       </section>
@@ -874,7 +1133,7 @@ const HomePage: React.FC = () => {
                   </button>
                 </div>
               </div>
-              
+
               <div className="p-6 space-y-6">
                 {tutorialSteps.map((step, index) => (
                   <motion.div
@@ -884,7 +1143,9 @@ const HomePage: React.FC = () => {
                     transition={{ delay: index * 0.2 }}
                     className="flex items-start space-x-4"
                   >
-                    <div className={`w-12 h-12 bg-gradient-to-r ${step.color} rounded-xl flex items-center justify-center flex-shrink-0`}>
+                    <div
+                      className={`w-12 h-12 bg-gradient-to-r ${step.color} rounded-xl flex items-center justify-center flex-shrink-0`}
+                    >
                       <step.icon className="w-6 h-6 text-white" />
                     </div>
                     <div>
@@ -898,7 +1159,7 @@ const HomePage: React.FC = () => {
                   </motion.div>
                 ))}
               </div>
-              
+
               <div className="p-6 border-t border-gray-200 dark:border-gray-700">
                 <div className="flex space-x-3">
                   <button
