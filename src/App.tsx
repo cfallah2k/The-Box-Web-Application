@@ -41,6 +41,12 @@ import RefundPolicyPage from './pages/RefundPolicyPage';
 import ResearchLabPage from './pages/ResearchLabPage';
 import SignupPage from './pages/SignupPage';
 import TermsOfServicePage from './pages/TermsOfServicePage';
+import FeaturesPage from './pages/FeaturesPage';
+import CompanyPage from './pages/CompanyPage';
+import CareersPage from './pages/CareersPage';
+import PressPage from './pages/PressPage';
+import AboutPage from './pages/AboutPage';
+import ContactPage from './pages/ContactPage';
 
 // Components
 import OfflineStatus from './components/ui/OfflineStatus';
@@ -241,6 +247,10 @@ function App() {
                     <Route path="blog" element={<BlogPage />} />
                     <Route path="community" element={<CommunityPage />} />
                     <Route path="pricing" element={<PricingPage />} />
+                    <Route path="features" element={<FeaturesPage />} />
+                    <Route path="company" element={<CompanyPage />} />
+                    <Route path="careers" element={<CareersPage />} />
+                    <Route path="press" element={<PressPage />} />
 
                     {/* 404 Route */}
                     <Route path="*" element={<NotFoundPage />} />
