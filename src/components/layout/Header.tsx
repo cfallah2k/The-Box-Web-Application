@@ -1,35 +1,34 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Bars3Icon, 
-  XMarkIcon, 
-  SunIcon, 
-  MoonIcon,
-  UserCircleIcon,
+import {
   AcademicCapIcon,
-  BookOpenIcon,
-  ChatBubbleLeftRightIcon,
   ArrowRightOnRectangleIcon,
-  NewspaperIcon,
-  UsersIcon,
-  TagIcon,
-  UserGroupIcon,
-  ChartBarIcon,
-  ShoppingBagIcon,
+  Bars3Icon,
   BeakerIcon,
-  PhotoIcon,
-  DocumentTextIcon,
+  BellIcon,
+  BookOpenIcon,
+  ChartBarIcon,
+  ChatBubbleLeftRightIcon,
   ChevronDownIcon,
   CogIcon,
-  BellIcon,
-  MagnifyingGlassIcon,
-  SparklesIcon,
-  RocketLaunchIcon,
-  StarIcon,
+  DocumentTextIcon,
   HomeIcon,
-  GlobeAltIcon
+  MagnifyingGlassIcon,
+  MoonIcon,
+  NewspaperIcon,
+  PhotoIcon,
+  RocketLaunchIcon,
+  ShoppingBagIcon,
+  SparklesIcon,
+  StarIcon,
+  SunIcon,
+  TagIcon,
+  UserCircleIcon,
+  UserGroupIcon,
+  UsersIcon,
+  XMarkIcon,
 } from '@heroicons/react/24/outline';
+import { AnimatePresence, motion } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useToast } from '../../contexts/ToastContext';
@@ -38,6 +37,7 @@ const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isMoreMenuOpen, setIsMoreMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
@@ -46,6 +46,7 @@ const Header: React.FC = () => {
   const { addToast } = useToast();
   const userMenuRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
+  const moreMenuRef = useRef<HTMLDivElement>(null);
 
   // Handle scroll effect
   useEffect(() => {
@@ -59,11 +60,23 @@ const Header: React.FC = () => {
   // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+      if (
+        userMenuRef.current &&
+        !userMenuRef.current.contains(event.target as Node)
+      ) {
         setIsUserMenuOpen(false);
       }
-      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(event.target as Node)
+      ) {
         setIsSearchOpen(false);
+      }
+      if (
+        moreMenuRef.current &&
+        !moreMenuRef.current.contains(event.target as Node)
+      ) {
+        setIsMoreMenuOpen(false);
       }
     };
 
@@ -83,18 +96,60 @@ const Header: React.FC = () => {
   const getNavigationItems = () => {
     const allItems = [
       { name: 'Home', href: '/', icon: HomeIcon, priority: 'high' },
-      { name: 'Courses', href: '/courses', icon: BookOpenIcon, priority: 'high' },
-      { name: 'AI Tutor', href: '/ai-tutor', icon: ChatBubbleLeftRightIcon, priority: 'high' },
-      { name: 'Cohorts', href: '/cohorts', icon: UserGroupIcon, priority: 'medium' },
-      { name: 'Analytics', href: '/analytics', icon: ChartBarIcon, priority: 'medium' },
-      { name: 'Marketplace', href: '/marketplace', icon: ShoppingBagIcon, priority: 'medium' },
-      { name: 'Research Lab', href: '/research-lab', icon: BeakerIcon, priority: 'low' },
+      {
+        name: 'Courses',
+        href: '/courses',
+        icon: BookOpenIcon,
+        priority: 'high',
+      },
+      {
+        name: 'AI Tutor',
+        href: '/ai-tutor',
+        icon: ChatBubbleLeftRightIcon,
+        priority: 'high',
+      },
+      {
+        name: 'Cohorts',
+        href: '/cohorts',
+        icon: UserGroupIcon,
+        priority: 'medium',
+      },
+      {
+        name: 'Analytics',
+        href: '/analytics',
+        icon: ChartBarIcon,
+        priority: 'medium',
+      },
+      {
+        name: 'Marketplace',
+        href: '/marketplace',
+        icon: ShoppingBagIcon,
+        priority: 'medium',
+      },
+      {
+        name: 'Research Lab',
+        href: '/research-lab',
+        icon: BeakerIcon,
+        priority: 'low',
+      },
       { name: 'Gallery', href: '/gallery', icon: PhotoIcon, priority: 'low' },
       { name: 'News', href: '/news', icon: NewspaperIcon, priority: 'low' },
       { name: 'Blog', href: '/blog', icon: DocumentTextIcon, priority: 'low' },
-      { name: 'Community', href: '/community', icon: UsersIcon, priority: 'low' },
+      {
+        name: 'Community',
+        href: '/community',
+        icon: UsersIcon,
+        priority: 'low',
+      },
       { name: 'Pricing', href: '/pricing', icon: TagIcon, priority: 'low' },
-      { name: 'Dashboard', href: getDashboardPath(), icon: AcademicCapIcon, protected: true, dynamicPath: true, priority: 'high' },
+      {
+        name: 'Dashboard',
+        href: getDashboardPath(),
+        icon: AcademicCapIcon,
+        protected: true,
+        dynamicPath: true,
+        priority: 'high',
+      },
     ];
 
     return allItems.filter(item => !item.protected || isAuthenticated);
@@ -104,6 +159,7 @@ const Header: React.FC = () => {
     logout();
     addToast({ type: 'success', title: 'Successfully logged out' });
     setIsUserMenuOpen(false);
+    setIsMobileMenuOpen(false);
   };
 
   const isActive = (href: string) => {
@@ -113,12 +169,21 @@ const Header: React.FC = () => {
     return location.pathname.startsWith(href);
   };
 
-  const renderNavigationItem = (item: any, onClick?: () => void, variant: 'desktop' | 'mobile' | 'dropdown' = 'desktop') => {
-    const baseClasses = "flex items-center space-x-2 px-3 py-2 rounded-xl text-sm font-medium transition-all duration-200";
-    const activeClasses = "text-primary-600 bg-primary-50 dark:bg-primary-900/20 shadow-sm";
-    const inactiveClasses = "text-gray-700 hover:text-primary-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-primary-400 dark:hover:bg-gray-800";
+  const renderNavigationItem = (
+    item: any,
+    onClick?: () => void,
+    variant: 'desktop' | 'mobile' | 'dropdown' = 'desktop'
+  ) => {
+    const baseClasses =
+      'flex items-center space-x-2 px-3 py-2 rounded-xl text-sm font-medium transition-all duration-200';
+    const activeClasses =
+      'text-primary-600 bg-primary-50 dark:bg-primary-900/20 shadow-sm';
+    const inactiveClasses =
+      'text-gray-700 hover:text-primary-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-primary-400 dark:hover:bg-gray-800';
 
-    const classes = `${baseClasses} ${isActive(item.href) ? activeClasses : inactiveClasses}`;
+    const classes = `${baseClasses} ${
+      isActive(item.href) ? activeClasses : inactiveClasses
+    }`;
 
     return (
       <Link
@@ -140,18 +205,23 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled 
-        ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200 dark:bg-gray-900/95 dark:border-gray-700' 
-        : 'bg-transparent'
-    }`}>
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200 dark:bg-gray-900/95 dark:border-gray-700'
+          : 'bg-transparent'
+      }`}
+    >
       <div className="max-w-7xl mx-auto">
         {/* Desktop Header */}
         <div className="hidden lg:block">
           <div className="flex items-center justify-between h-20 px-6">
             {/* Logo */}
-            <Link to="/" className="flex items-center space-x-3 flex-shrink-0 group">
-              <motion.div 
+            <Link
+              to="/"
+              className="flex items-center space-x-3 flex-shrink-0 group"
+            >
+              <motion.div
                 className="w-10 h-10 bg-gradient-to-br from-primary-600 to-accent-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -167,14 +237,45 @@ const Header: React.FC = () => {
             <nav className="flex items-center space-x-1">
               {getNavigationItems()
                 .filter(item => item.priority === 'high')
-                .map((item) => renderNavigationItem(item))}
-              
+                .map(item => renderNavigationItem(item))}
+
               {/* More dropdown for medium priority items */}
-              <div className="relative">
-                <button className="flex items-center space-x-2 px-4 py-2 rounded-xl text-sm font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-primary-400 dark:hover:bg-gray-800 transition-all duration-200">
+              <div className="relative" ref={moreMenuRef}>
+                <button
+                  onClick={() => setIsMoreMenuOpen(!isMoreMenuOpen)}
+                  className="flex items-center space-x-2 px-4 py-2 rounded-xl text-sm font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-primary-400 dark:hover:bg-gray-800 transition-all duration-200"
+                >
                   <span>More</span>
-                  <ChevronDownIcon className="w-4 h-4" />
+                  <ChevronDownIcon
+                    className={`w-4 h-4 transition-transform duration-200 ${
+                      isMoreMenuOpen ? 'rotate-180' : ''
+                    }`}
+                  />
                 </button>
+
+                <AnimatePresence>
+                  {isMoreMenuOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                      transition={{ duration: 0.2 }}
+                      className="absolute top-full left-0 mt-2 w-64 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 py-2 z-50"
+                    >
+                      <div className="space-y-1">
+                        {getNavigationItems()
+                          .filter(item => item.priority !== 'high')
+                          .map(item =>
+                            renderNavigationItem(
+                              item,
+                              () => setIsMoreMenuOpen(false),
+                              'dropdown'
+                            )
+                          )}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </nav>
 
@@ -206,7 +307,7 @@ const Header: React.FC = () => {
                             type="text"
                             placeholder="Search courses, topics..."
                             value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
+                            onChange={e => setSearchQuery(e.target.value)}
                             className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                             autoFocus
                           />
@@ -269,7 +370,11 @@ const Header: React.FC = () => {
                       <UserCircleIcon className="w-6 h-6" />
                       <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-500 rounded-full border border-white dark:border-gray-800"></div>
                     </div>
-                    <ChevronDownIcon className={`w-4 h-4 transition-transform duration-200 ${isUserMenuOpen ? 'rotate-180' : ''}`} />
+                    <ChevronDownIcon
+                      className={`w-4 h-4 transition-transform duration-200 ${
+                        isUserMenuOpen ? 'rotate-180' : ''
+                      }`}
+                    />
                   </button>
 
                   <AnimatePresence>
@@ -288,11 +393,17 @@ const Header: React.FC = () => {
                               <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white dark:border-gray-800"></div>
                             </div>
                             <div>
-                              <p className="text-sm font-semibold text-gray-900 dark:text-white">{user?.name}</p>
-                              <p className="text-xs text-gray-500 dark:text-gray-400">{user?.email}</p>
+                              <p className="text-sm font-semibold text-gray-900 dark:text-white">
+                                {user?.name}
+                              </p>
+                              <p className="text-xs text-gray-500 dark:text-gray-400">
+                                {user?.email}
+                              </p>
                               <div className="flex items-center space-x-1 mt-1">
                                 <SparklesIcon className="w-3 h-3 text-yellow-500" />
-                                <span className="text-xs text-gray-500 dark:text-gray-400">Premium</span>
+                                <span className="text-xs text-gray-500 dark:text-gray-400">
+                                  Premium
+                                </span>
                               </div>
                             </div>
                           </div>
@@ -337,8 +448,11 @@ const Header: React.FC = () => {
         <div className="lg:hidden">
           <div className="flex items-center justify-between h-16 px-4">
             {/* Logo */}
-            <Link to="/" className="flex items-center space-x-2 flex-shrink-0 group">
-              <motion.div 
+            <Link
+              to="/"
+              className="flex items-center space-x-2 flex-shrink-0 group"
+            >
+              <motion.div
                 className="w-8 h-8 bg-gradient-to-br from-primary-600 to-accent-600 rounded-lg flex items-center justify-center shadow-md group-hover:shadow-lg transition-all duration-300"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -350,129 +464,20 @@ const Header: React.FC = () => {
               </span>
             </Link>
 
-            {/* Mobile Actions */}
-            <div className="flex items-center space-x-2">
-              {/* Search */}
-              <button
-                onClick={() => setIsSearchOpen(!isSearchOpen)}
-                className="p-2 rounded-xl text-gray-700 hover:text-primary-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-primary-400 dark:hover:bg-gray-800 transition-all duration-200"
-                aria-label="Search"
-              >
-                <MagnifyingGlassIcon className="w-5 h-5" />
-              </button>
-
-              {/* Theme Toggle */}
-              <motion.button
-                onClick={toggleTheme}
-                className="p-2 rounded-xl text-gray-700 hover:text-primary-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-primary-400 dark:hover:bg-gray-800 transition-all duration-200"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {theme === 'dark' ? (
-                  <SunIcon className="w-5 h-5" />
-                ) : (
-                  <MoonIcon className="w-5 h-5" />
-                )}
-              </motion.button>
-
-              {!isAuthenticated ? (
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Link
-                    to="/signup"
-                    className="bg-gradient-to-r from-primary-600 to-accent-600 text-white px-4 py-2 rounded-xl font-medium hover:shadow-lg transition-all duration-200"
-                  >
-                    Get Started
-                  </Link>
-                </motion.div>
+            {/* Mobile menu button only */}
+            <motion.button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2 rounded-xl text-gray-700 hover:text-primary-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-primary-400 dark:hover:bg-gray-800 transition-all duration-200"
+              aria-label="Toggle mobile menu"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {isMobileMenuOpen ? (
+                <XMarkIcon className="w-6 h-6" />
               ) : (
-                <div className="relative" ref={userMenuRef}>
-                  <button
-                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                    className="flex items-center space-x-2 p-2 rounded-xl text-gray-700 hover:text-primary-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-primary-400 dark:hover:bg-gray-800 transition-all duration-200"
-                  >
-                    <div className="relative">
-                      <UserCircleIcon className="w-6 h-6" />
-                      <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-500 rounded-full border border-white dark:border-gray-800"></div>
-                    </div>
-                    <ChevronDownIcon className={`w-4 h-4 transition-transform duration-200 ${isUserMenuOpen ? 'rotate-180' : ''}`} />
-                  </button>
-
-                  <AnimatePresence>
-                    {isUserMenuOpen && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                        transition={{ duration: 0.2 }}
-                        className="absolute right-0 mt-2 w-72 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 py-2 z-50"
-                      >
-                        <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
-                          <div className="flex items-center space-x-3">
-                            <div className="relative">
-                              <UserCircleIcon className="w-10 h-10 text-primary-600" />
-                              <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white dark:border-gray-800"></div>
-                            </div>
-                            <div>
-                              <p className="text-sm font-semibold text-gray-900 dark:text-white">{user?.name}</p>
-                              <p className="text-xs text-gray-500 dark:text-gray-400">{user?.email}</p>
-                              <div className="flex items-center space-x-1 mt-1">
-                                <SparklesIcon className="w-3 h-3 text-yellow-500" />
-                                <span className="text-xs text-gray-500 dark:text-gray-400">Premium</span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="py-1">
-                          <Link
-                            to="/profile"
-                            className="flex items-center space-x-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 transition-all duration-200"
-                            onClick={() => setIsUserMenuOpen(false)}
-                          >
-                            <UserCircleIcon className="w-4 h-4" />
-                            <span>Profile</span>
-                          </Link>
-                          <Link
-                            to={getDashboardPath()}
-                            className="flex items-center space-x-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 transition-all duration-200"
-                            onClick={() => setIsUserMenuOpen(false)}
-                          >
-                            <AcademicCapIcon className="w-4 h-4" />
-                            <span>Dashboard</span>
-                          </Link>
-                        </div>
-                        <div className="border-t border-gray-200 dark:border-gray-700 py-1">
-                          <button
-                            onClick={handleLogout}
-                            className="flex items-center space-x-3 w-full px-4 py-3 text-sm text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20 transition-all duration-200"
-                          >
-                            <ArrowRightOnRectangleIcon className="w-4 h-4" />
-                            <span>Sign Out</span>
-                          </button>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
+                <Bars3Icon className="w-6 h-6" />
               )}
-
-              {/* Mobile menu button */}
-              <motion.button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="p-2 rounded-xl text-gray-700 hover:text-primary-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-primary-400 dark:hover:bg-gray-800 transition-all duration-200"
-                aria-label="Toggle mobile menu"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {isMobileMenuOpen ? (
-                  <XMarkIcon className="w-6 h-6" />
-                ) : (
-                  <Bars3Icon className="w-6 h-6" />
-                )}
-              </motion.button>
-            </div>
+            </motion.button>
           </div>
         </div>
       </div>
@@ -484,7 +489,7 @@ const Header: React.FC = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="lg:hidden border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 safe-area-bottom"
           >
             <div className="px-4 py-6 space-y-6">
@@ -505,6 +510,31 @@ const Header: React.FC = () => {
                 </div>
               </div>
 
+              {/* Theme Toggle and Search in Mobile Menu */}
+              <div className="flex items-center justify-between">
+                <button
+                  onClick={toggleTheme}
+                  className="flex items-center space-x-2 p-3 rounded-xl text-gray-700 hover:text-primary-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-primary-400 dark:hover:bg-gray-800 transition-all duration-200"
+                >
+                  {theme === 'dark' ? (
+                    <SunIcon className="w-5 h-5" />
+                  ) : (
+                    <MoonIcon className="w-5 h-5" />
+                  )}
+                  <span className="text-sm font-medium">
+                    {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+                  </span>
+                </button>
+
+                <button
+                  onClick={() => setIsSearchOpen(!isSearchOpen)}
+                  className="flex items-center space-x-2 p-3 rounded-xl text-gray-700 hover:text-primary-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-primary-400 dark:hover:bg-gray-800 transition-all duration-200"
+                >
+                  <MagnifyingGlassIcon className="w-5 h-5" />
+                  <span className="text-sm font-medium">Search</span>
+                </button>
+              </div>
+
               {/* Quick Actions */}
               <div className="grid grid-cols-2 gap-3">
                 <Link
@@ -516,8 +546,12 @@ const Header: React.FC = () => {
                     <ChatBubbleLeftRightIcon className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-gray-900 dark:text-white">AI Tutor</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">Get help instantly</p>
+                    <p className="text-sm font-semibold text-gray-900 dark:text-white">
+                      AI Tutor
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      Get help instantly
+                    </p>
                   </div>
                 </Link>
                 <Link
@@ -529,8 +563,12 @@ const Header: React.FC = () => {
                     <BookOpenIcon className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-gray-900 dark:text-white">Courses</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">Learn new skills</p>
+                    <p className="text-sm font-semibold text-gray-900 dark:text-white">
+                      Courses
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      Learn new skills
+                    </p>
                   </div>
                 </Link>
               </div>
@@ -544,8 +582,12 @@ const Header: React.FC = () => {
                 <div className="space-y-1">
                   {getNavigationItems()
                     .filter(item => item.priority === 'high')
-                    .map((item) => 
-                      renderNavigationItem(item, () => setIsMobileMenuOpen(false), 'mobile')
+                    .map(item =>
+                      renderNavigationItem(
+                        item,
+                        () => setIsMobileMenuOpen(false),
+                        'mobile'
+                      )
                     )}
                 </div>
               </div>
@@ -559,18 +601,26 @@ const Header: React.FC = () => {
                 <div className="space-y-1">
                   {getNavigationItems()
                     .filter(item => item.priority !== 'high')
-                    .map((item) => 
-                      renderNavigationItem(item, () => setIsMobileMenuOpen(false), 'mobile')
+                    .map(item =>
+                      renderNavigationItem(
+                        item,
+                        () => setIsMobileMenuOpen(false),
+                        'mobile'
+                      )
                     )}
                 </div>
               </div>
-              
+
               {/* Auth Section */}
               {!isAuthenticated ? (
                 <div className="pt-6 space-y-4 border-t border-gray-200 dark:border-gray-700">
                   <div className="text-center">
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Join The Box</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">Start your learning journey today</p>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                      Join The Box
+                    </h3>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                      Start your learning journey today
+                    </p>
                   </div>
                   <Link
                     to="/login"
@@ -596,22 +646,30 @@ const Header: React.FC = () => {
                         <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white dark:border-gray-800"></div>
                       </div>
                       <div>
-                        <p className="text-base font-semibold text-gray-900 dark:text-white">{user?.name}</p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">{user?.email}</p>
+                        <p className="text-base font-semibold text-gray-900 dark:text-white">
+                          {user?.name}
+                        </p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                          {user?.email}
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-1">
                         <SparklesIcon className="w-4 h-4 text-yellow-500" />
-                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Premium Member</span>
+                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                          Premium Member
+                        </span>
                       </div>
                       <div className="flex items-center space-x-1">
                         <StarIcon className="w-4 h-4 text-yellow-500" />
-                        <span className="text-sm text-gray-500 dark:text-gray-400">4.9/5</span>
+                        <span className="text-sm text-gray-500 dark:text-gray-400">
+                          4.9/5
+                        </span>
                       </div>
                     </div>
                   </div>
-                  
+
                   <div className="grid grid-cols-2 gap-3">
                     <Link
                       to="/profile"
@@ -646,7 +704,7 @@ const Header: React.FC = () => {
                       <span className="text-sm font-medium">Settings</span>
                     </Link>
                   </div>
-                  
+
                   <button
                     onClick={handleLogout}
                     className="flex items-center justify-center space-x-2 w-full px-4 py-4 text-base text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 border-2 border-red-300 dark:border-red-600 rounded-2xl hover:bg-red-50 dark:hover:bg-red-900/20 transition-all duration-200"
@@ -664,4 +722,4 @@ const Header: React.FC = () => {
   );
 };
 
-export default Header; 
+export default Header;
