@@ -16,6 +16,7 @@ import AdminDashboardPage from './pages/AdminDashboardPage';
 import AnalyticsPage from './pages/AnalyticsPage';
 import BlogPage from './pages/BlogPage';
 import CareersPage from './pages/CareersPage';
+import CertificateVerificationPage from './pages/CertificateVerificationPage';
 import CohortDetailPage from './pages/CohortDetailPage';
 import CohortPage from './pages/CohortPage';
 import CommunityPage from './pages/CommunityPage';
@@ -47,8 +48,11 @@ import SignupPage from './pages/SignupPage';
 import TermsOfServicePage from './pages/TermsOfServicePage';
 
 // Instructor Pages
+import CertificateGeneratorPage from './pages/instructor/CertificateGeneratorPage';
+import InstructorAnalyticsPage from './pages/instructor/AnalyticsPage';
 import ContactInstructorPage from './pages/instructor/ContactInstructorPage';
 import CreateCoursePage from './pages/instructor/CreateCoursePage';
+import GradeAssignmentsPage from './pages/instructor/GradeAssignmentsPage';
 import ScheduleSessionPage from './pages/instructor/ScheduleSessionPage';
 import StartLiveSessionPage from './pages/instructor/StartLiveSessionPage';
 import ViewCourseDetailsPage from './pages/instructor/ViewCourseDetailsPage';
@@ -58,6 +62,31 @@ import ViewStudentsPage from './pages/instructor/ViewStudentsPage';
 import AIStudyAssistantPage from './pages/ai/AIStudyAssistantPage';
 import AITutorPageNew from './pages/ai/AITutorPage';
 import AIVoiceCommandsPage from './pages/ai/AIVoiceCommandsPage';
+import CodeReviewPage from './pages/ai/CodeReviewPage';
+import ResearchAssistantPage from './pages/ai/ResearchAssistantPage';
+import ContentCreatorPage from './pages/ai/ContentCreatorPage';
+import LearningPathGeneratorPage from './pages/ai/LearningPathGeneratorPage';
+
+// Student Pages
+import AchievementsPage from './pages/student/AchievementsPage';
+import AssignmentsPage from './pages/student/AssignmentsPage';
+import CalendarPage from './pages/student/CalendarPage';
+import CertificatesPage from './pages/student/CertificatesPage';
+import MyCoursesPage from './pages/student/MyCoursesPage';
+import ProgressPage from './pages/student/ProgressPage';
+import QuizzesPage from './pages/student/QuizzesPage';
+import StudyGroupsPage from './pages/student/StudyGroupsPage';
+import WishlistPage from './pages/student/WishlistPage';
+
+// Admin Pages
+import CertificateManagementPage from './pages/admin/CertificateManagementPage';
+import AdvancedAnalyticsPage from './pages/admin/AdvancedAnalyticsPage';
+import CourseManagementPage from './pages/admin/CourseManagementPage';
+import UserManagementPage from './pages/admin/UserManagementPage';
+
+// Enterprise Pages
+import LearningAnalyticsPage from './pages/enterprise/LearningAnalyticsPage';
+import TeamManagementPage from './pages/enterprise/TeamManagementPage';
 
 // Components
 import NotificationSettings from './components/ui/NotificationSettings';
@@ -134,11 +163,63 @@ function App() {
                         </ProtectedRoute>
                       }
                     />
+
+                    {/* Admin Routes */}
+                    <Route
+                      path="admin/users"
+                      element={
+                        <ProtectedRoute allowedRoles={['admin']}>
+                          <UserManagementPage />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="admin/courses"
+                      element={
+                        <ProtectedRoute allowedRoles={['admin']}>
+                          <CourseManagementPage />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="admin/certificates"
+                      element={
+                        <ProtectedRoute allowedRoles={['admin']}>
+                          <CertificateManagementPage />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="admin/analytics"
+                      element={
+                        <ProtectedRoute allowedRoles={['admin']}>
+                          <AdvancedAnalyticsPage />
+                        </ProtectedRoute>
+                      }
+                    />
                     <Route
                       path="enterprise-dashboard"
                       element={
                         <ProtectedRoute allowedRoles={['enterprise', 'admin']}>
                           <EnterpriseDashboardPage />
+                        </ProtectedRoute>
+                      }
+                    />
+
+                    {/* Enterprise Routes */}
+                    <Route
+                      path="enterprise/team"
+                      element={
+                        <ProtectedRoute allowedRoles={['enterprise', 'admin']}>
+                          <TeamManagementPage />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="enterprise/analytics"
+                      element={
+                        <ProtectedRoute allowedRoles={['enterprise', 'admin']}>
+                          <LearningAnalyticsPage />
                         </ProtectedRoute>
                       }
                     />
@@ -193,10 +274,116 @@ function App() {
                       }
                     />
                     <Route
+                      path="ai/code-review"
+                      element={
+                        <ProtectedRoute>
+                          <CodeReviewPage />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="ai/research-assistant"
+                      element={
+                        <ProtectedRoute>
+                          <ResearchAssistantPage />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="ai/content-creator"
+                      element={
+                        <ProtectedRoute>
+                          <ContentCreatorPage />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="ai/learning-path-generator"
+                      element={
+                        <ProtectedRoute>
+                          <LearningPathGeneratorPage />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
                       path="profile"
                       element={
                         <ProtectedRoute>
                           <ProfilePage />
+                        </ProtectedRoute>
+                      }
+                    />
+
+                    {/* Student Routes */}
+                    <Route
+                      path="my-courses"
+                      element={
+                        <ProtectedRoute>
+                          <MyCoursesPage />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="certificates"
+                      element={
+                        <ProtectedRoute>
+                          <CertificatesPage />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="study-groups"
+                      element={
+                        <ProtectedRoute>
+                          <StudyGroupsPage />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="progress"
+                      element={
+                        <ProtectedRoute>
+                          <ProgressPage />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="wishlist"
+                      element={
+                        <ProtectedRoute>
+                          <WishlistPage />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="assignments"
+                      element={
+                        <ProtectedRoute>
+                          <AssignmentsPage />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="quizzes"
+                      element={
+                        <ProtectedRoute>
+                          <QuizzesPage />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="calendar"
+                      element={
+                        <ProtectedRoute>
+                          <CalendarPage />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="achievements"
+                      element={
+                        <ProtectedRoute>
+                          <AchievementsPage />
                         </ProtectedRoute>
                       }
                     />
@@ -283,6 +470,30 @@ function App() {
                       }
                     />
                     <Route
+                      path="instructor/grade-assignments"
+                      element={
+                        <ProtectedRoute allowedRoles={['instructor', 'admin']}>
+                          <GradeAssignmentsPage />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="instructor/analytics"
+                      element={
+                        <ProtectedRoute allowedRoles={['instructor', 'admin']}>
+                          <InstructorAnalyticsPage />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="instructor/certificate-generator"
+                      element={
+                        <ProtectedRoute allowedRoles={['instructor', 'admin']}>
+                          <CertificateGeneratorPage />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
                       path="analytics"
                       element={
                         <ProtectedRoute>
@@ -341,6 +552,7 @@ function App() {
                     <Route path="company" element={<CompanyPage />} />
                     <Route path="careers" element={<CareersPage />} />
                     <Route path="press" element={<PressPage />} />
+                    <Route path="verify-certificate" element={<CertificateVerificationPage />} />
 
                     {/* 404 Route */}
                     <Route path="*" element={<NotFoundPage />} />

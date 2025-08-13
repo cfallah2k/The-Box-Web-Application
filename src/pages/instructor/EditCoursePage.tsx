@@ -1,515 +1,427 @@
-import {
-  AcademicCapIcon,
-  ArrowLeftIcon,
-  CheckIcon,
-  CurrencyDollarIcon,
-  DocumentTextIcon,
-  PencilIcon,
-  PlusIcon,
-  StarIcon,
-  TrashIcon,
-} from '@heroicons/react/24/outline';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 
-interface CourseSection {
-  id: string;
-  title: string;
-  description: string;
-  type: 'video' | 'text' | 'quiz' | 'assignment';
-  duration: number;
-  isPublished: boolean;
-}
-
-interface CourseData {
+interface Course {
   id: string;
   title: string;
   description: string;
   category: string;
-  level: 'beginner' | 'intermediate' | 'advanced';
+  difficulty: 'beginner' | 'intermediate' | 'advanced';
   price: number;
   thumbnail: string;
-  language: string;
-  maxStudents: number;
-  isPublished: boolean;
-  sections: CourseSection[];
-  tags: string[];
-  enrolledStudents: number;
-  rating: number;
+  lessons: Lesson[];
+  requirements: string[];
+  outcomes: string[];
+}
+
+interface Lesson {
+  id: string;
+  title: string;
+  duration: number;
+  type: 'video' | 'text' | 'quiz' | 'assignment';
+  content: string;
 }
 
 const EditCoursePage: React.FC = () => {
-  const navigate = useNavigate();
   const { courseId } = useParams<{ courseId: string }>();
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const [course, setCourse] = useState<Course | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
 
-  const [courseData, setCourseData] = useState<CourseData>({
-    id: courseId || '1',
-    title: 'Advanced React Development',
-    description: 'Master React with hooks, context, and advanced patterns.',
-    category: 'Programming',
-    level: 'intermediate',
-    price: 99.99,
-    thumbnail: '',
-    language: 'English',
-    maxStudents: 100,
-    isPublished: true,
-    sections: [
-      {
-        id: '1',
-        title: 'Introduction to React Hooks',
-        description: 'Learn the basics of React hooks',
-        type: 'video',
-        duration: 45,
-        isPublished: true,
-      },
-      {
-        id: '2',
-        title: 'Context API Deep Dive',
-        description: 'Master React Context for state management',
-        type: 'video',
-        duration: 60,
-        isPublished: true,
-      },
-    ],
-    tags: ['React', 'JavaScript', 'Frontend'],
-    enrolledStudents: 45,
-    rating: 4.7,
-  });
+  useEffect(() => {
+    const loadCourse = async () => {
+      setLoading(true);
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
-  const [newSection, setNewSection] = useState<Partial<CourseSection>>({
-    title: '',
-    description: '',
-    type: 'video',
-    duration: 0,
-  });
-
-  const categories = [
-    'Programming',
-    'Design',
-    'Business',
-    'Marketing',
-    'Data Science',
-  ];
-  const languages = ['English', 'Spanish', 'French', 'German'];
-
-  const handleInputChange = (field: keyof CourseData, value: any) => {
-    setCourseData(prev => ({ ...prev, [field]: value }));
-  };
-
-  const handleSectionAdd = () => {
-    if (newSection.title && newSection.description) {
-      const section: CourseSection = {
-        id: Date.now().toString(),
-        title: newSection.title!,
-        description: newSection.description!,
-        type: newSection.type || 'video',
-        duration: newSection.duration || 0,
-        isPublished: false,
+      const mockCourse: Course = {
+        id: courseId || '1',
+        title: 'Advanced React Development',
+        description:
+          'Master advanced React concepts including hooks, context, and performance optimization.',
+        category: 'Programming',
+        difficulty: 'advanced',
+        price: 99.99,
+        thumbnail: '/api/placeholder/400/300',
+        lessons: [
+          {
+            id: '1',
+            title: 'Introduction to Advanced React',
+            duration: 45,
+            type: 'video',
+            content: 'Overview of advanced React concepts',
+          },
+          {
+            id: '2',
+            title: 'Custom Hooks Deep Dive',
+            duration: 60,
+            type: 'video',
+            content: 'Creating and using custom hooks',
+          },
+        ],
+        requirements: ['Basic React knowledge', 'JavaScript fundamentals'],
+        outcomes: [
+          'Master advanced React patterns',
+          'Build scalable applications',
+        ],
       };
-      setCourseData(prev => ({
-        ...prev,
-        sections: [...prev.sections, section],
-      }));
-      setNewSection({ title: '', description: '', type: 'video', duration: 0 });
-    }
-  };
 
-  const handleSectionDelete = (sectionId: string) => {
-    setCourseData(prev => ({
-      ...prev,
-      sections: prev.sections.filter(s => s.id !== sectionId),
-    }));
-  };
+      setCourse(mockCourse);
+      setLoading(false);
+    };
 
-  const handleTagAdd = (tag: string) => {
-    if (tag && !courseData.tags.includes(tag)) {
-      setCourseData(prev => ({
-        ...prev,
-        tags: [...prev.tags, tag],
-      }));
-    }
-  };
-
-  const handleTagRemove = (tag: string) => {
-    setCourseData(prev => ({
-      ...prev,
-      tags: prev.tags.filter(t => t !== tag),
-    }));
-  };
+    loadCourse();
+  }, [courseId]);
 
   const handleSave = async () => {
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    navigate('/instructor/courses');
+    if (!course) return;
+
+    setSaving(true);
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    setSaving(false);
+
+    // Navigate back to course details
+    navigate(`/instructor/course/${course.id}`);
   };
 
-  return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <div className="container-responsive py-8">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center space-x-4">
-            <button
-              onClick={() => navigate('/instructor/courses')}
-              className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-            >
-              <ArrowLeftIcon className="w-6 h-6" />
-            </button>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-                Edit Course
-              </h1>
-              <p className="text-gray-600 dark:text-gray-400">
-                Update your course content and settings
-              </p>
-            </div>
-          </div>
-          <button onClick={handleSave} className="btn-primary">
-            <CheckIcon className="w-4 h-4" />
-            Save Changes
+  const updateCourse = (field: keyof Course, value: any) => {
+    if (!course) return;
+    setCourse({ ...course, [field]: value });
+  };
+
+  const addLesson = () => {
+    if (!course) return;
+    const newLesson: Lesson = {
+      id: Date.now().toString(),
+      title: 'New Lesson',
+      duration: 30,
+      type: 'video',
+      content: '',
+    };
+    setCourse({ ...course, lessons: [...course.lessons, newLesson] });
+  };
+
+  const removeLesson = (lessonId: string) => {
+    if (!course) return;
+    setCourse({
+      ...course,
+      lessons: course.lessons.filter(lesson => lesson.id !== lessonId),
+    });
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading course...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!course) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-xl font-semibold text-gray-900 mb-2">
+            Course not found
+          </h2>
+          <button
+            onClick={() => navigate('/instructor-dashboard')}
+            className="text-blue-600 hover:text-blue-700"
+          >
+            Back to Dashboard
           </button>
         </div>
+      </div>
+    );
+  }
 
-        {/* Course Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm">
-            <div className="flex items-center space-x-3">
-              <div className="p-2 bg-blue-100 dark:bg-blue-900/20 rounded-lg">
-                <AcademicCapIcon className="w-6 h-6 text-blue-600" />
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                  {courseData.enrolledStudents}
-                </p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Enrolled Students
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm">
-            <div className="flex items-center space-x-3">
-              <div className="p-2 bg-green-100 dark:bg-green-900/20 rounded-lg">
-                <DocumentTextIcon className="w-6 h-6 text-green-600" />
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                  {courseData.sections.length}
-                </p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Sections
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm">
-            <div className="flex items-center space-x-3">
-              <div className="p-2 bg-yellow-100 dark:bg-yellow-900/20 rounded-lg">
-                <StarIcon className="w-6 h-6 text-yellow-600" />
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                  {courseData.rating}
-                </p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Rating
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm">
-            <div className="flex items-center space-x-3">
-              <div className="p-2 bg-purple-100 dark:bg-purple-900/20 rounded-lg">
-                <CurrencyDollarIcon className="w-6 h-6 text-purple-600" />
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                  ${courseData.price}
-                </p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Price
-                </p>
-              </div>
-            </div>
-          </div>
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Edit Course</h1>
+          <p className="text-gray-600">
+            Update your course information and content
+          </p>
         </div>
 
-        {/* Course Form */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Course Title
-              </label>
-              <input
-                type="text"
-                value={courseData.title}
-                onChange={e => handleInputChange('title', e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
+        <div className="bg-white rounded-lg shadow-lg p-6">
+          {/* Basic Information */}
+          <div className="mb-8">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Basic Information
+            </h2>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Category
-              </label>
-              <select
-                value={courseData.category}
-                onChange={e => handleInputChange('category', e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
-              >
-                {categories.map(category => (
-                  <option key={category} value={category}>
-                    {category}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Price (USD)
-              </label>
-              <div className="relative">
-                <CurrencyDollarIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  type="number"
-                  value={courseData.price}
-                  onChange={e =>
-                    handleInputChange('price', parseFloat(e.target.value) || 0)
-                  }
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Language
-              </label>
-              <select
-                value={courseData.language}
-                onChange={e => handleInputChange('language', e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
-              >
-                {languages.map(language => (
-                  <option key={language} value={language}>
-                    {language}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          <div className="mt-6">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Course Description
-            </label>
-            <textarea
-              value={courseData.description}
-              onChange={e => handleInputChange('description', e.target.value)}
-              rows={6}
-              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
-          <div className="mt-6">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Tags
-            </label>
-            <div className="space-y-3">
-              <div className="flex space-x-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Course Title
+                </label>
                 <input
                   type="text"
-                  placeholder="Add a tag"
-                  className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-                  onKeyPress={e => {
-                    if (e.key === 'Enter') {
-                      handleTagAdd(e.currentTarget.value);
-                      e.currentTarget.value = '';
-                    }
-                  }}
+                  value={course.title}
+                  onChange={e => updateCourse('title', e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
-                <button
-                  onClick={() => {
-                    const input = document.querySelector(
-                      'input[placeholder="Add a tag"]'
-                    ) as HTMLInputElement;
-                    if (input?.value) {
-                      handleTagAdd(input.value);
-                      input.value = '';
-                    }
-                  }}
-                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Category
+                </label>
+                <select
+                  value={course.category}
+                  onChange={e => updateCourse('category', e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
-                  Add
-                </button>
+                  <option value="Programming">Programming</option>
+                  <option value="Design">Design</option>
+                  <option value="Business">Business</option>
+                  <option value="Marketing">Marketing</option>
+                </select>
               </div>
-              <div className="flex flex-wrap gap-2">
-                {courseData.tags.map(tag => (
-                  <span
-                    key={tag}
-                    className="px-3 py-1 bg-blue-100 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 rounded-full text-sm flex items-center space-x-1"
-                  >
-                    <span>{tag}</span>
-                    <button
-                      onClick={() => handleTagRemove(tag)}
-                      className="text-blue-500 hover:text-blue-700"
-                    >
-                      ×
-                    </button>
-                  </span>
-                ))}
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Difficulty Level
+                </label>
+                <select
+                  value={course.difficulty}
+                  onChange={e => updateCourse('difficulty', e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                >
+                  <option value="beginner">Beginner</option>
+                  <option value="intermediate">Intermediate</option>
+                  <option value="advanced">Advanced</option>
+                </select>
               </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Price ($)
+                </label>
+                <input
+                  type="number"
+                  value={course.price}
+                  onChange={e =>
+                    updateCourse('price', parseFloat(e.target.value))
+                  }
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+            </div>
+
+            <div className="mt-6">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Description
+              </label>
+              <textarea
+                value={course.description}
+                onChange={e => updateCourse('description', e.target.value)}
+                rows={4}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
             </div>
           </div>
 
-          {/* Course Sections */}
-          <div className="mt-8">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-              Course Sections
-            </h3>
-            <div className="space-y-4">
-              {courseData.sections.map((section, index) => (
-                <div
-                  key={section.id}
-                  className="p-4 border border-gray-200 dark:border-gray-600 rounded-lg"
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <span className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-medium">
-                        {index + 1}
-                      </span>
-                      <div>
-                        <h4 className="font-medium text-gray-900 dark:text-white">
-                          {section.title}
-                        </h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
-                          {section.description}
-                        </p>
-                        <div className="flex items-center space-x-2 mt-1">
-                          <span className="text-xs text-gray-500">
-                            {section.type}
-                          </span>
-                          <span className="text-xs text-gray-500">•</span>
-                          <span className="text-xs text-gray-500">
-                            {section.duration} min
-                          </span>
-                          <span
-                            className={`text-xs px-2 py-1 rounded ${
-                              section.isPublished
-                                ? 'bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-300'
-                                : 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300'
-                            }`}
-                          >
-                            {section.isPublished ? 'Published' : 'Draft'}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <button className="p-2 text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-900/20 rounded">
-                        <PencilIcon className="w-4 h-4" />
-                      </button>
-                      <button
-                        onClick={() => handleSectionDelete(section.id)}
-                        className="p-2 text-red-600 hover:bg-red-100 dark:hover:bg-red-900/20 rounded"
-                      >
-                        <TrashIcon className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Add New Section */}
-            <div className="mt-6 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6">
-              <h4 className="font-medium text-gray-900 dark:text-white mb-4">
-                Add New Section
-              </h4>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Section Title
-                  </label>
+          {/* Requirements */}
+          <div className="mb-8">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Requirements
+            </h2>
+            <div className="space-y-2">
+              {course.requirements.map((requirement, index) => (
+                <div key={index} className="flex gap-2">
                   <input
                     type="text"
-                    value={newSection.title}
-                    onChange={e =>
-                      setNewSection(prev => ({
-                        ...prev,
-                        title: e.target.value,
-                      }))
-                    }
-                    placeholder="Enter section title"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                    value={requirement}
+                    onChange={e => {
+                      const newRequirements = [...course.requirements];
+                      newRequirements[index] = e.target.value;
+                      updateCourse('requirements', newRequirements);
+                    }}
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Section Type
-                  </label>
-                  <select
-                    value={newSection.type}
-                    onChange={e =>
-                      setNewSection(prev => ({
-                        ...prev,
-                        type: e.target.value as any,
-                      }))
-                    }
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                  <button
+                    onClick={() => {
+                      const newRequirements = course.requirements.filter(
+                        (_, i) => i !== index
+                      );
+                      updateCourse('requirements', newRequirements);
+                    }}
+                    className="px-3 py-2 text-red-600 hover:text-red-700"
                   >
-                    <option value="video">Video</option>
-                    <option value="text">Text</option>
-                    <option value="quiz">Quiz</option>
-                    <option value="assignment">Assignment</option>
-                  </select>
+                    Remove
+                  </button>
                 </div>
-                <div className="lg:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Description
-                  </label>
-                  <textarea
-                    value={newSection.description}
-                    onChange={e =>
-                      setNewSection(prev => ({
-                        ...prev,
-                        description: e.target.value,
-                      }))
-                    }
-                    rows={3}
-                    placeholder="Describe this section..."
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-                  />
-                </div>
-              </div>
+              ))}
               <button
-                onClick={handleSectionAdd}
-                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 flex items-center space-x-2"
+                onClick={() =>
+                  updateCourse('requirements', [...course.requirements, ''])
+                }
+                className="text-blue-600 hover:text-blue-700 text-sm"
               >
-                <PlusIcon className="w-4 h-4" />
-                <span>Add Section</span>
+                + Add Requirement
               </button>
             </div>
           </div>
 
-          <div className="mt-6 flex items-center space-x-3">
-            <input
-              type="checkbox"
-              id="published"
-              checked={courseData.isPublished}
-              onChange={e => handleInputChange('isPublished', e.target.checked)}
-              className="rounded"
-            />
-            <label
-              htmlFor="published"
-              className="text-sm font-medium text-gray-700 dark:text-gray-300"
+          {/* Learning Outcomes */}
+          <div className="mb-8">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Learning Outcomes
+            </h2>
+            <div className="space-y-2">
+              {course.outcomes.map((outcome, index) => (
+                <div key={index} className="flex gap-2">
+                  <input
+                    type="text"
+                    value={outcome}
+                    onChange={e => {
+                      const newOutcomes = [...course.outcomes];
+                      newOutcomes[index] = e.target.value;
+                      updateCourse('outcomes', newOutcomes);
+                    }}
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                  <button
+                    onClick={() => {
+                      const newOutcomes = course.outcomes.filter(
+                        (_, i) => i !== index
+                      );
+                      updateCourse('outcomes', newOutcomes);
+                    }}
+                    className="px-3 py-2 text-red-600 hover:text-red-700"
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+              <button
+                onClick={() =>
+                  updateCourse('outcomes', [...course.outcomes, ''])
+                }
+                className="text-blue-600 hover:text-blue-700 text-sm"
+              >
+                + Add Outcome
+              </button>
+            </div>
+          </div>
+
+          {/* Lessons */}
+          <div className="mb-8">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold text-gray-900">Lessons</h2>
+              <button
+                onClick={addLesson}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                Add Lesson
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              {course.lessons.map((lesson, index) => (
+                <div
+                  key={lesson.id}
+                  className="border border-gray-200 rounded-lg p-4"
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Lesson Title
+                      </label>
+                      <input
+                        type="text"
+                        value={lesson.title}
+                        onChange={e => {
+                          const newLessons = [...course.lessons];
+                          newLessons[index] = {
+                            ...lesson,
+                            title: e.target.value,
+                          };
+                          updateCourse('lessons', newLessons);
+                        }}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Duration (minutes)
+                      </label>
+                      <input
+                        type="number"
+                        value={lesson.duration}
+                        onChange={e => {
+                          const newLessons = [...course.lessons];
+                          newLessons[index] = {
+                            ...lesson,
+                            duration: parseInt(e.target.value),
+                          };
+                          updateCourse('lessons', newLessons);
+                        }}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Type
+                      </label>
+                      <select
+                        value={lesson.type}
+                        onChange={e => {
+                          const newLessons = [...course.lessons];
+                          newLessons[index] = {
+                            ...lesson,
+                            type: e.target.value as any,
+                          };
+                          updateCourse('lessons', newLessons);
+                        }}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      >
+                        <option value="video">Video</option>
+                        <option value="text">Text</option>
+                        <option value="quiz">Quiz</option>
+                        <option value="assignment">Assignment</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end">
+                    <button
+                      onClick={() => removeLesson(lesson.id)}
+                      className="px-3 py-1 text-red-600 hover:text-red-700 text-sm"
+                    >
+                      Remove Lesson
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Save Button */}
+          <div className="flex justify-end gap-4">
+            <button
+              onClick={() => navigate(`/instructor/course/${course.id}`)}
+              className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
             >
-              Publish course
-            </label>
+              Cancel
+            </button>
+            <button
+              onClick={handleSave}
+              disabled={saving}
+              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
+            >
+              {saving ? 'Saving...' : 'Save Changes'}
+            </button>
           </div>
         </div>
       </div>
